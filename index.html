@@ -84,9 +84,7 @@
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 
-                0 10px 0 #d0d0d0,
-                0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 0 #d0d0d0, 0 20px 50px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
             position: relative;
             top: 0;
@@ -94,16 +92,12 @@
 
         .start-btn:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 
-                0 15px 0 #d0d0d0,
-                0 25px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 0 #d0d0d0, 0 25px 60px rgba(0,0,0,0.4);
         }
 
         .start-btn:active {
             top: 8px;
-            box-shadow: 
-                0 2px 0 #d0d0d0,
-                0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 0 #d0d0d0, 0 10px 30px rgba(0,0,0,0.3);
         }
 
         /* Header */
@@ -208,7 +202,7 @@
             opacity: 0;
         }
 
-        /* Magic Wand Animation */
+        /* Magic Container */
         .magic-container {
             position: absolute;
             top: 0;
@@ -217,111 +211,85 @@
             height: 100%;
             pointer-events: none;
             z-index: 100;
-            overflow: visible;
         }
 
-        .magic-wand {
+        /* Magic Orb */
+        .magic-orb {
             position: absolute;
-            width: 100px;
-            height: 100px;
-            background: url('https://cdn-icons-png.flaticon.com/512/3062/3062652.png') no-repeat center center;
-            background-size: contain;
-            filter: drop-shadow(0 0 30px rgba(255,215,0,1)) drop-shadow(0 0 60px rgba(255,105,180,0.8));
-            animation: magicWave 2.5s ease-in-out;
-        }
-
-        @keyframes magicWave {
-            0% {
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) rotate(0deg) scale(0.3);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-                transform: translate(-50%, -50%) rotate(45deg) scale(1);
-            }
-            25% {
-                top: 30%;
-                left: 60%;
-                transform: translate(-50%, -50%) rotate(120deg) scale(1.1);
-            }
-            50% {
-                top: 40%;
-                left: 30%;
-                transform: translate(-50%, -50%) rotate(200deg) scale(1);
-            }
-            75% {
-                top: 70%;
-                left: 50%;
-                transform: translate(-50%, -50%) rotate(280deg) scale(1.05);
-            }
-            90% {
-                top: 50%;
-                left: 50%;
-                opacity: 1;
-                transform: translate(-50%, -50%) rotate(340deg) scale(0.9);
-            }
-            100% {
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) rotate(360deg) scale(0.3);
-                opacity: 0;
-            }
-        }
-
-        /* Magical Stars */
-        .magic-star {
-            position: absolute;
-            width: 35px;
-            height: 35px;
-            background: url('https://cdn-icons-png.flaticon.com/512/867/867856.png') no-repeat center center;
-            background-size: contain;
-            pointer-events: none;
-            filter: drop-shadow(0 0 15px rgba(255,215,0,1));
-            animation: starOrbit 2s ease-out forwards;
-        }
-
-        @keyframes starOrbit {
-            0% {
-                opacity: 0;
-                transform: scale(0) rotate(0deg);
-            }
-            20% {
-                opacity: 1;
-                transform: scale(1.4) rotate(72deg);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0.3) rotate(360deg) translateY(-100px);
-            }
-        }
-
-        /* Sparkle particles */
-        .sparkle-particle {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,215,0,0.9) 40%, transparent 70%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #ffc0cb, #ff69b4, #ff1493);
             border-radius: 50%;
-            pointer-events: none;
-            animation: sparkleBurst 1.5s ease-out forwards;
-            box-shadow: 0 0 20px rgba(255,215,0,0.8);
+            box-shadow: 0 0 30px #ff69b4, 0 0 60px #ff1493, 0 0 90px rgba(255,105,180,0.8);
+            z-index: 100;
         }
 
-        @keyframes sparkleBurst {
-            0% {
-                opacity: 1;
-                transform: scale(0) translate(0, 0);
-            }
-            50% {
-                opacity: 0.9;
-                transform: scale(1.3) translate(var(--tx), var(--ty));
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0.3) translate(calc(var(--tx) * 2.5), calc(var(--ty) * 2.5));
-            }
+        /* CSS Heart */
+        .heart {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #ff69b4;
+            transform: rotate(45deg);
+            box-shadow: 0 0 15px #ff69b4, 0 0 30px #ff1493;
+            animation: heartFloat 1.8s ease-out forwards;
+            z-index: 90;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #ff69b4;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #ff69b4, 0 0 30px #ff1493;
+        }
+
+        .heart::before { left: -9px; }
+        .heart::after { top: -9px; }
+
+        @keyframes heartFloat {
+            0% { opacity: 0; transform: rotate(45deg) scale(0); }
+            30% { opacity: 1; transform: rotate(45deg) scale(1.3); }
+            60% { opacity: 0.9; transform: rotate(45deg) scale(1.1); }
+            100% { opacity: 0; transform: rotate(45deg) scale(0.4) translateY(-80px); }
+        }
+
+        /* CSS Star */
+        .star {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            box-shadow: 0 0 15px white, 0 0 30px #ffd700;
+            animation: starTwinkle 1.8s ease-out forwards;
+            z-index: 90;
+        }
+
+        @keyframes starTwinkle {
+            0% { opacity: 0; transform: scale(0) rotate(0deg); }
+            30% { opacity: 1; transform: scale(1.4) rotate(90deg); }
+            60% { opacity: 0.9; transform: scale(1.2) rotate(180deg); }
+            100% { opacity: 0; transform: scale(0.4) rotate(360deg) translateY(-80px); }
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, white 0%, #ffd700 50%, transparent 70%);
+            border-radius: 50%;
+            animation: sparkleFly 1.2s ease-out forwards;
+            z-index: 95;
+        }
+
+        @keyframes sparkleFly {
+            0% { opacity: 1; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(0.3) translate(var(--tx), var(--ty)); }
         }
 
         /* Steps Panel */
@@ -347,12 +315,8 @@
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             opacity: 0.5;
             cursor: default;
-            /* 3D convex effect */
             background: linear-gradient(180deg, #93c5dd 0%, #6f8d9d 100%);
-            box-shadow: 
-                0 6px 0 #5a7080,
-                0 10px 10px rgba(0,0,0,0.2),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 6px 0 #5a7080, 0 10px 10px rgba(0,0,0,0.2), inset 0 2px 5px rgba(255,255,255,0.4);
             color: white;
             position: relative;
             top: 0;
@@ -360,37 +324,25 @@
 
         .step-item:hover {
             transform: translateY(-2px);
-            box-shadow: 
-                0 8px 0 #5a7080,
-                0 15px 20px rgba(0,0,0,0.25),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 8px 0 #5a7080, 0 15px 20px rgba(0,0,0,0.25), inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         .step-item:active {
             top: 4px;
-            box-shadow: 
-                0 2px 0 #5a7080,
-                0 5px 10px rgba(0,0,0,0.2),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 2px 0 #5a7080, 0 5px 10px rgba(0,0,0,0.2), inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         .step-item.active {
             opacity: 1;
             background: linear-gradient(180deg, #c67a8f 0%, #a86075 100%);
-            box-shadow: 
-                0 6px 0 #8a5060,
-                0 10px 10px rgba(198, 122, 143, 0.4),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 6px 0 #8a5060, 0 10px 10px rgba(198, 122, 143, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
             transform: scale(1.05) translateX(5px);
         }
 
         .step-item.completed {
             opacity: 1;
             background: linear-gradient(180deg, #9cb9ce 0%, #7a90a5 100%);
-            box-shadow: 
-                0 6px 0 #657890,
-                0 10px 10px rgba(156, 185, 206, 0.4),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 6px 0 #657890, 0 10px 10px rgba(156, 185, 206, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         .step-icon {
@@ -424,9 +376,7 @@
             padding: 35px;
             border-radius: 25px;
             margin-bottom: 35px;
-            box-shadow: 
-                0 8px 0 #5a7080,
-                0 15px 30px rgba(111, 141, 157, 0.4);
+            box-shadow: 0 8px 0 #5a7080, 0 15px 30px rgba(111, 141, 157, 0.4);
             position: relative;
             top: 0;
         }
@@ -465,62 +415,41 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            box-shadow: 
-                0 6px 0 #5a7080,
-                0 10px 10px rgba(0,0,0,0.2),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 6px 0 #5a7080, 0 10px 10px rgba(0,0,0,0.2), inset 0 2px 5px rgba(255,255,255,0.4);
             position: relative;
             top: 0;
         }
 
         .option-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 
-                0 8px 0 #5a7080,
-                0 15px 20px rgba(0,0,0,0.25),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 8px 0 #5a7080, 0 15px 20px rgba(0,0,0,0.25), inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         .option-btn:active {
             top: 4px;
-            box-shadow: 
-                0 2px 0 #5a7080,
-                0 5px 10px rgba(0,0,0,0.2),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 2px 0 #5a7080, 0 5px 10px rgba(0,0,0,0.2), inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         .option-btn.correct {
             background: linear-gradient(180deg, #9cb9ce 0%, #7a90a5 100%);
-            box-shadow: 
-                0 6px 0 #657890,
-                0 10px 10px rgba(156, 185, 206, 0.4),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 6px 0 #657890, 0 10px 10px rgba(156, 185, 206, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
             animation: correctPulse 0.7s ease;
         }
 
         .option-btn.correct:active {
             top: 4px;
-            box-shadow: 
-                0 2px 0 #657890,
-                0 5px 10px rgba(156, 185, 206, 0.4),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 2px 0 #657890, 0 5px 10px rgba(156, 185, 206, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         .option-btn.wrong {
             background: linear-gradient(180deg, #c67a8f 0%, #a86075 100%);
-            box-shadow: 
-                0 6px 0 #8a5060,
-                0 10px 10px rgba(198, 122, 143, 0.4),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 6px 0 #8a5060, 0 10px 10px rgba(198, 122, 143, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
             animation: shake 0.6s ease;
         }
 
         .option-btn.wrong:active {
             top: 4px;
-            box-shadow: 
-                0 2px 0 #8a5060,
-                0 5px 10px rgba(198, 122, 143, 0.4),
-                inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 2px 0 #8a5060, 0 5px 10px rgba(198, 122, 143, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         @keyframes correctPulse {
@@ -563,7 +492,7 @@
             box-shadow: 0 5px 15px rgba(168, 96, 117, 0.3);
         }
 
-        /* Final Screen with Before-After */
+        /* Final Screen */
         .final-screen {
             position: absolute;
             top: 0;
@@ -600,7 +529,6 @@
             50% { transform: translateY(-25px); }
         }
 
-        /* Before-After Gallery */
         .before-after-container {
             display: flex;
             gap: 30px;
@@ -655,7 +583,6 @@
             font-weight: 600;
         }
 
-        /* 3D New Client Button */
         .final-btn {
             padding: 25px 60px;
             font-size: 24px;
@@ -665,9 +592,7 @@
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 
-                0 8px 0 #5a7080,
-                0 15px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 0 #5a7080, 0 15px 40px rgba(0,0,0,0.3);
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             position: relative;
             top: 0;
@@ -676,36 +601,55 @@
 
         .final-btn:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 
-                0 12px 0 #5a7080,
-                0 20px 50px rgba(0,0,0,0.4);
+            box-shadow: 0 12px 0 #5a7080, 0 20px 50px rgba(0,0,0,0.4);
         }
 
         .final-btn:active {
             top: 6px;
-            box-shadow: 
-                0 2px 0 #5a7080,
-                0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 0 #5a7080, 0 10px 30px rgba(0,0,0,0.3);
         }
 
         /* Mouse Trail Hearts and Stars */
-        .mouse-trail {
+        .mouse-trail-heart {
             position: fixed;
             pointer-events: none;
             z-index: 9999;
-            font-size: 24px;
+            width: 16px;
+            height: 16px;
+            background: #ff69b4;
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px #ff69b4, 0 0 20px #ffd700;
+            animation: trailFade 1s ease-out forwards;
+        }
+
+        .mouse-trail-heart::before, .mouse-trail-heart::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #ff69b4;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff69b4, 0 0 20px #ffd700;
+        }
+
+        .mouse-trail-heart::before { left: -8px; }
+        .mouse-trail-heart::after { top: -8px; }
+
+        .mouse-trail-star {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 20px;
+            height: 20px;
+            background: white;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            box-shadow: 0 0 10px white, 0 0 20px #ffd700;
             animation: trailFade 1s ease-out forwards;
         }
 
         @keyframes trailFade {
-            0% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0.3) rotate(180deg) translateY(-50px);
-            }
+            0% { opacity: 1; transform: scale(1) rotate(0deg); }
+            100% { opacity: 0; transform: scale(0.3) rotate(180deg) translateY(-50px); }
         }
 
         /* Confetti */
@@ -847,7 +791,7 @@
         </div>
     </div>
 
-    <!-- Final Screen with Before-After -->
+    <!-- Final Screen -->
     <div class="final-screen" id="finalScreen">
         <h1 class="final-title">🎉 Клиент в восторге!</h1>
         
@@ -970,7 +914,7 @@ class BeautyQuestGame {
             this.config.theme = e.target.value;
         });
 
-        // Mouse trail effect
+        // Mouse trail effect with CSS hearts and stars
         this.initMouseTrail();
     }
 
@@ -982,19 +926,38 @@ class BeautyQuestGame {
     }
 
     initMouseTrail() {
-        const trailItems = ['💖', '⭐', '✨', '💫', '🌟'];
         let lastTrailTime = 0;
+        const trailColors = ['#ff69b4', '#ffffff', '#87ceeb']; // Розовые, белые, голубые
         
         document.addEventListener('mousemove', (e) => {
             const currentTime = Date.now();
-            if (currentTime - lastTrailTime > 100) { // Create trail every 100ms
+            if (currentTime - lastTrailTime > 80) {
                 lastTrailTime = currentTime;
                 
+                const color = trailColors[Math.floor(Math.random() * trailColors.length)];
+                const type = Math.random() > 0.5 ? 'heart' : 'star';
+                
                 const trail = document.createElement('div');
-                trail.className = 'mouse-trail';
-                trail.textContent = trailItems[Math.floor(Math.random() * trailItems.length)];
-                trail.style.left = e.clientX + 'px';
-                trail.style.top = e.clientY + 'px';
+                
+                if (type === 'heart') {
+                    trail.className = 'mouse-trail-heart';
+                    trail.style.background = color;
+                    trail.style.boxShadow = `0 0 10px ${color}, 0 0 20px #ffd700`;
+                    
+                    const pseudoStyle = document.createElement('style');
+                    pseudoStyle.textContent = `
+                        .mouse-trail-heart::before, .mouse-trail-heart::after {
+                            background: ${color} !important;
+                            box-shadow: 0 0 10px ${color}, 0 0 20px #ffd700 !important;
+                        }
+                    `;
+                    trail.appendChild(pseudoStyle);
+                } else {
+                    trail.className = 'mouse-trail-star';
+                }
+                
+                trail.style.left = (e.clientX - 8) + 'px';
+                trail.style.top = (e.clientY - 8) + 'px';
                 document.body.appendChild(trail);
                 
                 setTimeout(() => trail.remove(), 1000);
@@ -1002,63 +965,74 @@ class BeautyQuestGame {
         });
     }
 
-    createMagicWand() {
+    createMagicOrb() {
         const container = this.ui.magicContainer;
         container.innerHTML = '';
         
-        // Create magic wand
-        const wand = document.createElement('div');
-        wand.className = 'magic-wand';
-        container.appendChild(wand);
+        const orb = document.createElement('div');
+        orb.className = 'magic-orb';
+        container.appendChild(orb);
         
-        // Create stars in circular pattern
-        const starCount = 8;
-        for (let i = 0; i < starCount; i++) {
-            setTimeout(() => {
-                const angle = (i / starCount) * Math.PI * 2;
-                const radius = 150;
-                const x = Math.cos(angle) * radius + container.offsetWidth / 2;
-                const y = Math.sin(angle) * radius + container.offsetHeight / 2;
+        const duration = 2000;
+        const startTime = Date.now();
+        const centerX = container.offsetWidth / 2;
+        const centerY = container.offsetHeight / 2;
+        const radius = 120;
+        
+        function animateOrb() {
+            const elapsed = Date.now() - startTime;
+            const progress = elapsed / duration;
+            
+            if (progress < 1) {
+                const angle = progress * Math.PI * 2;
+                const x = centerX + Math.cos(angle) * radius - 25;
+                const y = centerY + Math.sin(angle) * radius - 25;
                 
-                const star = document.createElement('div');
-                star.className = 'magic-star';
-                star.style.left = x + 'px';
-                star.style.top = y + 'px';
-                star.style.transform = `rotate(${i * 45}deg)`;
-                container.appendChild(star);
+                orb.style.left = x + 'px';
+                orb.style.top = y + 'px';
                 
-                // Create sparkle particles from star
-                for (let j = 0; j < 6; j++) {
-                    setTimeout(() => {
-                        this.createSparkleParticle(x, y);
-                    }, j * 80);
+                if (elapsed % 150 < 50) {
+                    createTrail(x + 25, y + 25, container);
                 }
                 
-                setTimeout(() => star.remove(), 2000);
-            }, i * 200);
+                requestAnimationFrame(animateOrb);
+            } else {
+                orb.remove();
+            }
         }
         
-        setTimeout(() => {
-            wand.remove();
-        }, 2500);
+        animateOrb();
     }
 
-    createSparkleParticle(x, y) {
-        const particle = document.createElement('div');
-        particle.className = 'sparkle-particle';
+    function createTrail(x, y, container) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+        container.appendChild(heart);
         
-        const angle = (Math.random() * Math.PI * 2);
-        const distance = 40 + Math.random() * 80;
-        const tx = Math.cos(angle) * distance;
-        const ty = Math.sin(angle) * distance;
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = (x - 20) + 'px';
+        star.style.top = (y - 20) + 'px';
+        container.appendChild(star);
         
-        particle.style.setProperty('--tx', tx + 'px');
-        particle.style.setProperty('--ty', ty + 'px');
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
+        for (let i = 0; i < 4; i++) {
+            setTimeout(() => {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                const angle = (Math.random() * Math.PI * 2);
+                const dist = 20 + Math.random() * 40;
+                sparkle.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+                sparkle.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+                sparkle.style.left = x + 'px';
+                sparkle.style.top = y + 'px';
+                container.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1200);
+            }, i * 100);
+        }
         
-        this.ui.magicContainer.appendChild(particle);
-        setTimeout(() => particle.remove(), 1500);
+        setTimeout(() => { heart.remove(); star.remove(); }, 1800);
     }
 
     shuffleArray(array) {
@@ -1085,7 +1059,6 @@ class BeautyQuestGame {
         this.ui.questionText.textContent = question.text;
         this.ui.optionsList.innerHTML = '';
 
-        // Shuffle options randomly
         const shuffledOptions = this.shuffleArray(question.options);
 
         shuffledOptions.forEach((option, index) => {
@@ -1096,7 +1069,6 @@ class BeautyQuestGame {
             this.ui.optionsList.appendChild(btn);
         });
 
-        // Update steps with consistent colors
         document.querySelectorAll('.step-item').forEach((item, index) => {
             item.classList.remove('active', 'completed');
             if (index < this.config.currentStep) {
@@ -1142,10 +1114,8 @@ class BeautyQuestGame {
     }
 
     applyTransformation(photoIndex) {
-        // Create magic wand effect
-        this.createMagicWand();
+        this.createMagicOrb();
         
-        // Fade out effect
         this.ui.clientPhoto.classList.add('fade-out');
         
         setTimeout(() => {
@@ -1154,7 +1124,7 @@ class BeautyQuestGame {
             this.ui.clientPhoto.onload = () => {
                 this.ui.clientPhoto.classList.remove('fade-out');
             };
-        }, 1250);
+        }, 1000);
 
         setTimeout(() => {
             this.config.currentStep++;
