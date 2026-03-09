@@ -13,31 +13,105 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #93c5dd 0%, #c67a8f 50%, #e6d480 100%);
+            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         .game-container {
             width: 100%;
             max-width: 1200px;
             height: 90vh;
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
+        }
+
+        /* START SCREEN */
+        .start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #93c5dd 0%, #c67a8f 50%, #e6d480 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            color: white;
+        }
+
+        .start-screen.hidden {
+            display: none;
+        }
+
+        .salon-title {
+            font-size: 72px;
+            font-weight: bold;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            animation: titleGlow 2s ease infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 4px 4px 8px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5); }
+            50% { text-shadow: 4px 4px 8px rgba(0,0,0,0.3), 0 0 40px rgba(255,255,255,0.8); }
+        }
+
+        .salon-subtitle {
+            font-size: 32px;
+            margin-bottom: 60px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .start-btn {
+            padding: 30px 80px;
+            font-size: 28px;
+            background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
+            color: #c67a8f;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 
+                0 10px 0 #d0d0d0,
+                0 20px 50px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            top: 0;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 15px 0 #d0d0d0,
+                0 25px 60px rgba(0,0,0,0.4);
+        }
+
+        .start-btn:active {
+            top: 8px;
+            box-shadow: 
+                0 2px 0 #d0d0d0,
+                0 10px 30px rgba(0,0,0,0.3);
         }
 
         /* Header */
         .game-header {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #9cb9ce 0%, #c67a8f 100%);
             padding: 20px 30px;
             color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .header-top {
@@ -68,15 +142,16 @@
             border: none;
             border-radius: 20px;
             background: rgba(255,255,255,0.9);
-            color: #764ba2;
+            color: #6f8d9d;
             font-weight: bold;
             cursor: pointer;
             outline: none;
             font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .progress-container {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.4);
             height: 12px;
             border-radius: 10px;
             overflow: hidden;
@@ -84,11 +159,11 @@
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #fff 0%, #ffeaa7 100%);
+            background: linear-gradient(90deg, #fff 0%, #ffcc99 100%);
             width: 0%;
             transition: width 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
         }
 
         /* Main Game Area */
@@ -96,16 +171,17 @@
             flex: 1;
             display: flex;
             overflow: hidden;
+            position: relative;
         }
 
         /* Left Side - Photo */
         .photo-section {
             flex: 1;
-            background: linear-gradient(180deg, #ffeaa8 0%, #fab1a0 100%);
+            background: linear-gradient(180deg, rgba(147, 197, 221, 0.2) 0%, rgba(198, 122, 143, 0.2) 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 30px;
+            padding: 30px 30px 30px 280px;
             position: relative;
         }
 
@@ -115,9 +191,10 @@
             height: 600px;
             border-radius: 25px;
             overflow: hidden;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.3);
             position: relative;
             background: #fff;
+            border: 5px solid rgba(156, 185, 206, 0.5);
         }
 
         .client-photo {
@@ -131,7 +208,123 @@
             opacity: 0;
         }
 
-        /* Steps List */
+        /* Magic Wand Animation */
+        .magic-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            overflow: visible;
+        }
+
+        .magic-wand {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url('https://cdn-icons-png.flaticon.com/512/3062/3062652.png') no-repeat center center;
+            background-size: contain;
+            filter: drop-shadow(0 0 30px rgba(255,215,0,1)) drop-shadow(0 0 60px rgba(255,105,180,0.8));
+            animation: magicWave 2.5s ease-in-out;
+        }
+
+        @keyframes magicWave {
+            0% {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(0deg) scale(0.3);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(45deg) scale(1);
+            }
+            25% {
+                top: 30%;
+                left: 60%;
+                transform: translate(-50%, -50%) rotate(120deg) scale(1.1);
+            }
+            50% {
+                top: 40%;
+                left: 30%;
+                transform: translate(-50%, -50%) rotate(200deg) scale(1);
+            }
+            75% {
+                top: 70%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(280deg) scale(1.05);
+            }
+            90% {
+                top: 50%;
+                left: 50%;
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(340deg) scale(0.9);
+            }
+            100% {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(360deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* Magical Stars */
+        .magic-star {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: url('https://cdn-icons-png.flaticon.com/512/867/867856.png') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+            filter: drop-shadow(0 0 15px rgba(255,215,0,1));
+            animation: starOrbit 2s ease-out forwards;
+        }
+
+        @keyframes starOrbit {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1.4) rotate(72deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3) rotate(360deg) translateY(-100px);
+            }
+        }
+
+        /* Sparkle particles */
+        .sparkle-particle {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,215,0,0.9) 40%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkleBurst 1.5s ease-out forwards;
+            box-shadow: 0 0 20px rgba(255,215,0,0.8);
+        }
+
+        @keyframes sparkleBurst {
+            0% {
+                opacity: 1;
+                transform: scale(0) translate(0, 0);
+            }
+            50% {
+                opacity: 0.9;
+                transform: scale(1.3) translate(var(--tx), var(--ty));
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3) translate(calc(var(--tx) * 2.5), calc(var(--ty) * 2.5));
+            }
+        }
+
+        /* Steps Panel */
         .steps-panel {
             position: absolute;
             top: 20px;
@@ -150,28 +343,63 @@
             gap: 15px;
             margin: 15px 0;
             padding: 15px 18px;
-            border-radius: 12px;
+            border-radius: 15px;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            opacity: 0.4;
+            opacity: 0.5;
             cursor: default;
+            /* 3D convex effect */
+            background: linear-gradient(180deg, #93c5dd 0%, #6f8d9d 100%);
+            box-shadow: 
+                0 6px 0 #5a7080,
+                0 10px 10px rgba(0,0,0,0.2),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+            color: white;
+            position: relative;
+            top: 0;
+        }
+
+        .step-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 0 #5a7080,
+                0 15px 20px rgba(0,0,0,0.25),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+        }
+
+        .step-item:active {
+            top: 4px;
+            box-shadow: 
+                0 2px 0 #5a7080,
+                0 5px 10px rgba(0,0,0,0.2),
+                inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         .step-item.active {
             opacity: 1;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transform: scale(1.08) translateX(5px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+            background: linear-gradient(180deg, #c67a8f 0%, #a86075 100%);
+            box-shadow: 
+                0 6px 0 #8a5060,
+                0 10px 10px rgba(198, 122, 143, 0.4),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+            transform: scale(1.05) translateX(5px);
         }
 
         .step-item.completed {
             opacity: 1;
-            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
-            color: white;
+            background: linear-gradient(180deg, #9cb9ce 0%, #7a90a5 100%);
+            box-shadow: 
+                0 6px 0 #657890,
+                0 10px 10px rgba(156, 185, 206, 0.4),
+                inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         .step-icon {
-            font-size: 28px;
+            width: 32px;
+            height: 32px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: brightness(0) invert(1);
         }
 
         .step-text {
@@ -182,7 +410,7 @@
         /* Right Side - Quiz */
         .quiz-section {
             width: 500px;
-            background: white;
+            background: rgba(255, 255, 255, 0.98);
             padding: 50px;
             display: flex;
             flex-direction: column;
@@ -191,12 +419,16 @@
         }
 
         .question-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%);
             color: white;
             padding: 35px;
             border-radius: 25px;
             margin-bottom: 35px;
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+            box-shadow: 
+                0 8px 0 #5a7080,
+                0 15px 30px rgba(111, 141, 157, 0.4);
+            position: relative;
+            top: 0;
         }
 
         .question-title {
@@ -218,10 +450,12 @@
             gap: 18px;
         }
 
+        /* 3D Convex Buttons */
         .option-btn {
             padding: 25px;
-            border: 3px solid #e0e0e0;
-            background: white;
+            border: none;
+            background: linear-gradient(180deg, #93c5dd 0%, #6f8d9d 100%);
+            color: white;
             border-radius: 18px;
             cursor: pointer;
             font-size: 17px;
@@ -231,31 +465,67 @@
             display: flex;
             align-items: center;
             gap: 18px;
+            box-shadow: 
+                0 6px 0 #5a7080,
+                0 10px 10px rgba(0,0,0,0.2),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+            position: relative;
+            top: 0;
         }
 
         .option-btn:hover {
-            border-color: #667eea;
-            transform: translateX(8px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 0 #5a7080,
+                0 15px 20px rgba(0,0,0,0.25),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+        }
+
+        .option-btn:active {
+            top: 4px;
+            box-shadow: 
+                0 2px 0 #5a7080,
+                0 5px 10px rgba(0,0,0,0.2),
+                inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         .option-btn.correct {
-            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
-            color: white;
-            border-color: #00b894;
+            background: linear-gradient(180deg, #9cb9ce 0%, #7a90a5 100%);
+            box-shadow: 
+                0 6px 0 #657890,
+                0 10px 10px rgba(156, 185, 206, 0.4),
+                inset 0 2px 5px rgba(255,255,255,0.4);
             animation: correctPulse 0.7s ease;
         }
 
+        .option-btn.correct:active {
+            top: 4px;
+            box-shadow: 
+                0 2px 0 #657890,
+                0 5px 10px rgba(156, 185, 206, 0.4),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+        }
+
         .option-btn.wrong {
-            background: linear-gradient(135deg, #d63031 0%, #e17055 100%);
-            color: white;
-            border-color: #d63031;
+            background: linear-gradient(180deg, #c67a8f 0%, #a86075 100%);
+            box-shadow: 
+                0 6px 0 #8a5060,
+                0 10px 10px rgba(198, 122, 143, 0.4),
+                inset 0 2px 5px rgba(255,255,255,0.4);
             animation: shake 0.6s ease;
+        }
+
+        .option-btn.wrong:active {
+            top: 4px;
+            box-shadow: 
+                0 2px 0 #8a5060,
+                0 5px 10px rgba(198, 122, 143, 0.4),
+                inset 0 2px 5px rgba(255,255,255,0.4);
         }
 
         @keyframes correctPulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+            50% { transform: scale(1.05); }
         }
 
         @keyframes shake {
@@ -282,25 +552,25 @@
         }
 
         .feedback-message.success {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            color: #155724;
-            box-shadow: 0 5px 15px rgba(21, 87, 36, 0.2);
+            background: linear-gradient(180deg, #9cb9ce 0%, #7a90a5 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(122, 144, 165, 0.3);
         }
 
         .feedback-message.error {
-            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-            color: #721c24;
-            box-shadow: 0 5px 15px rgba(114, 28, 36, 0.2);
+            background: linear-gradient(180deg, #c67a8f 0%, #a86075 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(168, 96, 117, 0.3);
         }
 
-        /* Final Screen */
+        /* Final Screen with Before-After */
         .final-screen {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #93c5dd 0%, #c67a8f 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -310,6 +580,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.6s ease;
+            padding: 40px;
         }
 
         .final-screen.show {
@@ -329,55 +600,112 @@
             50% { transform: translateY(-25px); }
         }
 
+        /* Before-After Gallery */
+        .before-after-container {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .photo-comparison {
+            text-align: center;
+        }
+
+        .photo-comparison-label {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .photo-comparison img {
+            width: 250px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border: 5px solid white;
+        }
+
+        .transformation-arrow {
+            font-size: 60px;
+            animation: arrowPulse 1.5s ease infinite;
+        }
+
+        @keyframes arrowPulse {
+            0%, 100% { transform: translateX(0) scale(1); opacity: 1; }
+            50% { transform: translateX(10px) scale(1.1); opacity: 0.8; }
+        }
+
         .final-stats {
             background: rgba(255,255,255,0.25);
-            padding: 40px 70px;
+            padding: 30px 60px;
             border-radius: 25px;
-            margin: 35px 0;
+            margin: 25px 0;
             backdrop-filter: blur(15px);
             box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
 
         .stat-item {
-            font-size: 26px;
-            margin: 20px 0;
+            font-size: 24px;
+            margin: 15px 0;
             font-weight: 600;
         }
 
+        /* 3D New Client Button */
         .final-btn {
             padding: 25px 60px;
-            font-size: 26px;
-            background: white;
-            color: #f5576c;
+            font-size: 24px;
+            background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%);
+            color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            box-shadow: 
+                0 8px 0 #5a7080,
+                0 15px 40px rgba(0,0,0,0.3);
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            top: 0;
+            margin-top: 20px;
         }
 
         .final-btn:hover {
-            transform: translateY(-8px) scale(1.08);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 12px 0 #5a7080,
+                0 20px 50px rgba(0,0,0,0.4);
         }
 
-        /* Sparkles */
-        .sparkle {
-            position: absolute;
-            width: 35px;
-            height: 35px;
-            background: radial-gradient(circle, #fff 0%, transparent 70%);
-            border-radius: 50%;
+        .final-btn:active {
+            top: 6px;
+            box-shadow: 
+                0 2px 0 #5a7080,
+                0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Mouse Trail Hearts and Stars */
+        .mouse-trail {
+            position: fixed;
             pointer-events: none;
-            animation: sparkleAnim 1.2s ease-out forwards;
-            z-index: 100;
-            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+            z-index: 9999;
+            font-size: 24px;
+            animation: trailFade 1s ease-out forwards;
         }
 
-        @keyframes sparkleAnim {
-            0% { transform: scale(0) rotate(0deg); opacity: 1; }
-            100% { transform: scale(2.5) rotate(180deg); opacity: 0; }
+        @keyframes trailFade {
+            0% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3) rotate(180deg) translateY(-50px);
+            }
         }
 
         /* Confetti */
@@ -401,23 +729,53 @@
                 flex-direction: column;
             }
             
+            .photo-section {
+                padding: 30px;
+            }
+            
+            .steps-panel {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 20px;
+            }
+            
             .quiz-section {
                 width: 100%;
                 height: 45%;
                 padding: 30px;
             }
             
-            .photo-section {
-                height: 55%;
-            }
-            
             .photo-container {
                 height: 400px;
+            }
+
+            .before-after-container {
+                flex-direction: column;
+            }
+
+            .transformation-arrow {
+                transform: rotate(90deg);
+            }
+
+            .salon-title {
+                font-size: 48px;
+            }
+
+            .salon-subtitle {
+                font-size: 24px;
             }
         }
     </style>
 </head>
 <body>
+
+<!-- START SCREEN -->
+<div class="start-screen" id="startScreen">
+    <h1 class="salon-title">✨ Beauty Quest ✨</h1>
+    <p class="salon-subtitle">Салон Преображений</p>
+    <button class="start-btn" onclick="game.startGame()">🎀 Начать игру</button>
+</div>
 
 <div class="game-container" id="gameContainer">
     <!-- Header -->
@@ -451,29 +809,30 @@
         <div class="photo-section">
             <div class="steps-panel">
                 <div class="step-item active" data-step="0">
-                    <span class="step-icon">🌸</span>
-                    <span class="step-text">Базовый</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/3408/3408679.png" alt="" class="step-icon">
+                    <span class="step-text">Начало работы</span>
                 </div>
                 <div class="step-item" data-step="1">
-                    <span class="step-icon">💇‍♀️</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/4138/4138621.png" alt="" class="step-icon">
                     <span class="step-text">Укладка</span>
                 </div>
                 <div class="step-item" data-step="2">
-                    <span class="step-icon">💄</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/4138/4138667.png" alt="" class="step-icon">
                     <span class="step-text">Макияж</span>
                 </div>
                 <div class="step-item" data-step="3">
-                    <span class="step-icon">👗</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/8613/8613684.png" alt="" class="step-icon">
                     <span class="step-text">Наряд</span>
                 </div>
                 <div class="step-item" data-step="4">
-                    <span class="step-icon">💍</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/2936/2936886.png" alt="" class="step-icon">
                     <span class="step-text">Финал</span>
                 </div>
             </div>
 
             <div class="photo-container" id="photoContainer">
                 <img src="" alt="Client" class="client-photo" id="clientPhoto">
+                <div class="magic-container" id="magicContainer"></div>
             </div>
         </div>
 
@@ -488,9 +847,22 @@
         </div>
     </div>
 
-    <!-- Final Screen -->
+    <!-- Final Screen with Before-After -->
     <div class="final-screen" id="finalScreen">
         <h1 class="final-title">🎉 Клиент в восторге!</h1>
+        
+        <div class="before-after-container">
+            <div class="photo-comparison">
+                <div class="photo-comparison-label">✨ Было</div>
+                <img src="" alt="Before" id="beforePhoto">
+            </div>
+            <div class="transformation-arrow">➡️</div>
+            <div class="photo-comparison">
+                <div class="photo-comparison-label">🌟 Стало</div>
+                <img src="" alt="After" id="afterPhoto">
+            </div>
+        </div>
+
         <div class="final-stats">
             <div class="stat-item">✨ Вы завершили образ</div>
             <div class="stat-item">📊 Точность: <span id="finalAccuracy">100%</span></div>
@@ -506,19 +878,19 @@ class BeautyQuestGame {
     constructor() {
         this.config = {
             currentStep: 0,
-            totalSteps: 5,  // 5 этапов
+            totalSteps: 5,
             difficulty: 'pro',
             theme: 'glamour',
             correctAnswers: 0,
             totalAnswers: 0,
+            gameStarted: false,
             
-            // ✅ ВАШИ ФОТО ИЗ РЕПОЗИТОРИЯ
             photos: [
-                "1.jpg",  // Базовое фото
-                "2.jpg",  // + Укладка
-                "3.jpg",  // + Макияж
-                "4.jpg",  // + Наряд
-                "5.jpg"   // Финал (с украшениями)
+                "1.jpg",
+                "2.jpg",
+                "3.jpg",
+                "4.jpg",
+                "5.jpg"
             ],
             
             questions: [
@@ -554,7 +926,7 @@ class BeautyQuestGame {
                 },
                 {
                     text: "Какие украшения добавить?",
-                    hint: "Роскошные украшения для завершения образа",
+                    hint: "Роскошные украшения",
                     options: [
                         { text: "Без украшений", icon: "❌", correct: false, photoIndex: 3 },
                         { text: "Колье и серьги", icon: "💎", correct: true, photoIndex: 4 },
@@ -566,6 +938,7 @@ class BeautyQuestGame {
         };
 
         this.ui = {
+            startScreen: document.getElementById('startScreen'),
             currentStep: document.getElementById('currentStep'),
             totalSteps: document.getElementById('totalSteps'),
             progressBar: document.getElementById('progressBar'),
@@ -574,7 +947,10 @@ class BeautyQuestGame {
             feedbackMessage: document.getElementById('feedbackMessage'),
             finalScreen: document.getElementById('finalScreen'),
             clientPhoto: document.getElementById('clientPhoto'),
+            beforePhoto: document.getElementById('beforePhoto'),
+            afterPhoto: document.getElementById('afterPhoto'),
             photoContainer: document.getElementById('photoContainer'),
+            magicContainer: document.getElementById('magicContainer'),
             difficultySelect: document.getElementById('difficultySelect'),
             themeSelect: document.getElementById('themeSelect'),
             gameContainer: document.getElementById('gameContainer')
@@ -586,9 +962,6 @@ class BeautyQuestGame {
     init() {
         this.ui.totalSteps.textContent = this.config.totalSteps;
         
-        // Load base photo
-        this.ui.clientPhoto.src = this.config.photos[0];
-        
         this.ui.difficultySelect.addEventListener('change', (e) => {
             this.config.difficulty = e.target.value;
         });
@@ -597,7 +970,104 @@ class BeautyQuestGame {
             this.config.theme = e.target.value;
         });
 
+        // Mouse trail effect
+        this.initMouseTrail();
+    }
+
+    startGame() {
+        this.config.gameStarted = true;
+        this.ui.startScreen.classList.add('hidden');
+        this.ui.clientPhoto.src = this.config.photos[0];
         this.loadQuestion();
+    }
+
+    initMouseTrail() {
+        const trailItems = ['💖', '⭐', '✨', '💫', '🌟'];
+        let lastTrailTime = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            const currentTime = Date.now();
+            if (currentTime - lastTrailTime > 100) { // Create trail every 100ms
+                lastTrailTime = currentTime;
+                
+                const trail = document.createElement('div');
+                trail.className = 'mouse-trail';
+                trail.textContent = trailItems[Math.floor(Math.random() * trailItems.length)];
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                document.body.appendChild(trail);
+                
+                setTimeout(() => trail.remove(), 1000);
+            }
+        });
+    }
+
+    createMagicWand() {
+        const container = this.ui.magicContainer;
+        container.innerHTML = '';
+        
+        // Create magic wand
+        const wand = document.createElement('div');
+        wand.className = 'magic-wand';
+        container.appendChild(wand);
+        
+        // Create stars in circular pattern
+        const starCount = 8;
+        for (let i = 0; i < starCount; i++) {
+            setTimeout(() => {
+                const angle = (i / starCount) * Math.PI * 2;
+                const radius = 150;
+                const x = Math.cos(angle) * radius + container.offsetWidth / 2;
+                const y = Math.sin(angle) * radius + container.offsetHeight / 2;
+                
+                const star = document.createElement('div');
+                star.className = 'magic-star';
+                star.style.left = x + 'px';
+                star.style.top = y + 'px';
+                star.style.transform = `rotate(${i * 45}deg)`;
+                container.appendChild(star);
+                
+                // Create sparkle particles from star
+                for (let j = 0; j < 6; j++) {
+                    setTimeout(() => {
+                        this.createSparkleParticle(x, y);
+                    }, j * 80);
+                }
+                
+                setTimeout(() => star.remove(), 2000);
+            }, i * 200);
+        }
+        
+        setTimeout(() => {
+            wand.remove();
+        }, 2500);
+    }
+
+    createSparkleParticle(x, y) {
+        const particle = document.createElement('div');
+        particle.className = 'sparkle-particle';
+        
+        const angle = (Math.random() * Math.PI * 2);
+        const distance = 40 + Math.random() * 80;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--tx', tx + 'px');
+        particle.style.setProperty('--ty', ty + 'px');
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        
+        this.ui.magicContainer.appendChild(particle);
+        setTimeout(() => particle.remove(), 1500);
+    }
+
+    shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
     }
 
     loadQuestion() {
@@ -615,14 +1085,18 @@ class BeautyQuestGame {
         this.ui.questionText.textContent = question.text;
         this.ui.optionsList.innerHTML = '';
 
-        question.options.forEach((option, index) => {
+        // Shuffle options randomly
+        const shuffledOptions = this.shuffleArray(question.options);
+
+        shuffledOptions.forEach((option, index) => {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
             btn.innerHTML = `<span style="font-size: 32px">${option.icon}</span> <span>${option.text}</span>`;
-            btn.onclick = () => this.checkAnswer(index, option.correct, btn, option.photoIndex);
+            btn.onclick = () => this.checkAnswer(option.correct, btn, option.photoIndex);
             this.ui.optionsList.appendChild(btn);
         });
 
+        // Update steps with consistent colors
         document.querySelectorAll('.step-item').forEach((item, index) => {
             item.classList.remove('active', 'completed');
             if (index < this.config.currentStep) {
@@ -636,11 +1110,11 @@ class BeautyQuestGame {
         this.ui.feedbackMessage.textContent = '';
     }
 
-    checkAnswer(selectedIndex, isCorrect, btnElement, photoIndex) {
+    checkAnswer(isCorrect, btnElement, photoIndex) {
         this.config.totalAnswers++;
         
         const buttons = this.ui.optionsList.querySelectorAll('.option-btn');
-        buttons.forEach(btn => btn.style.pointerEvents = 'none');
+        buttons.forEach(btn => btn.disabled = true);
 
         if (isCorrect) {
             this.config.correctAnswers++;
@@ -656,7 +1130,7 @@ class BeautyQuestGame {
             
             setTimeout(() => {
                 btnElement.classList.remove('wrong');
-                buttons.forEach(btn => btn.style.pointerEvents = 'all');
+                buttons.forEach(btn => btn.disabled = false);
                 this.ui.feedbackMessage.classList.remove('show');
             }, 1500);
         }
@@ -668,51 +1142,32 @@ class BeautyQuestGame {
     }
 
     applyTransformation(photoIndex) {
+        // Create magic wand effect
+        this.createMagicWand();
+        
         // Fade out effect
         this.ui.clientPhoto.classList.add('fade-out');
         
         setTimeout(() => {
-            // Change photo
             this.ui.clientPhoto.src = this.config.photos[photoIndex];
             
-            // Fade in when loaded
             this.ui.clientPhoto.onload = () => {
                 this.ui.clientPhoto.classList.remove('fade-out');
             };
-        }, 600);
-
-        this.createSparkles();
+        }, 1250);
 
         setTimeout(() => {
             this.config.currentStep++;
             this.loadQuestion();
-        }, 1500);
-    }
-
-    createSparkles() {
-        const rect = this.ui.photoContainer.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        for (let i = 0; i < 20; i++) {
-            setTimeout(() => {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                const angle = (Math.random() * Math.PI * 2);
-                const distance = 120 + Math.random() * 120;
-                const x = centerX + Math.cos(angle) * distance - 17.5;
-                const y = centerY + Math.sin(angle) * distance - 17.5;
-                sparkle.style.left = x + 'px';
-                sparkle.style.top = y + 'px';
-                document.body.appendChild(sparkle);
-                setTimeout(() => sparkle.remove(), 1200);
-            }, i * 60);
-        }
+        }, 2500);
     }
 
     finishGame() {
         const accuracy = Math.round((this.config.correctAnswers / this.config.totalAnswers) * 100);
         const reward = this.config.correctAnswers * 10;
+        
+        this.ui.beforePhoto.src = this.config.photos[0];
+        this.ui.afterPhoto.src = this.config.photos[4];
         
         document.getElementById('finalAccuracy').textContent = accuracy + '%';
         document.getElementById('finalReward').textContent = reward;
@@ -731,7 +1186,7 @@ class BeautyQuestGame {
     }
 
     createConfetti() {
-        const colors = ['#f093fb', '#f5576c', '#4facfe', '#00f2fe', '#43e97b', '#fa709a'];
+        const colors = ['#93c5dd', '#c67a8f', '#9cb9ce', '#e6d480', '#ffcc99'];
         for (let i = 0; i < 50; i++) {
             setTimeout(() => {
                 const confetti = document.createElement('div');
@@ -751,7 +1206,6 @@ class BeautyQuestGame {
         this.config.correctAnswers = 0;
         this.config.totalAnswers = 0;
         
-        // Reset to base photo
         this.ui.clientPhoto.classList.add('fade-out');
         setTimeout(() => {
             this.ui.clientPhoto.src = this.config.photos[0];
