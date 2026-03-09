@@ -425,7 +425,7 @@
         <div class="header-top">
             <div class="step-indicator">
                 <span>✨</span>
-                <span>Этап <span id="currentStep">1</span>/<span id="totalSteps">4</span></span>
+                <span>Этап <span id="currentStep">1</span>/<span id="totalSteps">5</span></span>
             </div>
             <div class="controls">
                 <select class="control-select" id="difficultySelect">
@@ -451,20 +451,24 @@
         <div class="photo-section">
             <div class="steps-panel">
                 <div class="step-item active" data-step="0">
-                    <span class="step-icon">💇‍♀️</span>
-                    <span class="step-text">Причёска</span>
+                    <span class="step-icon">🌸</span>
+                    <span class="step-text">Базовый</span>
                 </div>
                 <div class="step-item" data-step="1">
+                    <span class="step-icon">💇‍♀️</span>
+                    <span class="step-text">Укладка</span>
+                </div>
+                <div class="step-item" data-step="2">
                     <span class="step-icon">💄</span>
                     <span class="step-text">Макияж</span>
                 </div>
-                <div class="step-item" data-step="2">
-                    <span class="step-icon">👗</span>
-                    <span class="step-text">Платье</span>
-                </div>
                 <div class="step-item" data-step="3">
+                    <span class="step-icon">👗</span>
+                    <span class="step-text">Наряд</span>
+                </div>
+                <div class="step-item" data-step="4">
                     <span class="step-icon">💍</span>
-                    <span class="step-text">Аксессуары</span>
+                    <span class="step-text">Финал</span>
                 </div>
             </div>
 
@@ -490,7 +494,7 @@
         <div class="final-stats">
             <div class="stat-item">✨ Вы завершили образ</div>
             <div class="stat-item">📊 Точность: <span id="finalAccuracy">100%</span></div>
-            <div class="stat-item">💰 Награда: <span id="finalReward">40</span> монет</div>
+            <div class="stat-item">💰 Награда: <span id="finalReward">50</span> монет</div>
             <div class="stat-item">🏆 Уровень: <span id="finalLevel">Мастер</span></div>
         </div>
         <button class="final-btn" onclick="game.restart()">🔄 Новый клиент</button>
@@ -502,20 +506,19 @@ class BeautyQuestGame {
     constructor() {
         this.config = {
             currentStep: 0,
-            totalSteps: 4,  // ИЗМЕНЕНО: 4 этапа вместо 5
+            totalSteps: 5,  // 5 этапов
             difficulty: 'pro',
             theme: 'glamour',
             correctAnswers: 0,
             totalAnswers: 0,
             
-            // ⚠️ ЗАМЕНИТЕ ЭТИ URL НА ВАШИ ФОТО!
+            // ✅ ВАШИ ФОТО ИЗ РЕПОЗИТОРИЯ
             photos: [
-                photos: [
-    "1.jpg",
-    "2.jpg",
-    "3.jpg",
-    "4.jpg"
-],
+                "1.jpg",  // Базовое фото
+                "2.jpg",  // + Укладка
+                "3.jpg",  // + Макияж
+                "4.jpg",  // + Наряд
+                "5.jpg"   // Финал (с украшениями)
             ],
             
             questions: [
@@ -551,13 +554,13 @@ class BeautyQuestGame {
                 },
                 {
                     text: "Какие украшения добавить?",
-                    hint: "Роскошные украшения",
+                    hint: "Роскошные украшения для завершения образа",
                     options: [
                         { text: "Без украшений", icon: "❌", correct: false, photoIndex: 3 },
-                        { text: "Колье и серьги", icon: "💎", correct: true, photoIndex: 3 },
+                        { text: "Колье и серьги", icon: "💎", correct: true, photoIndex: 4 },
                         { text: "Только браслет", icon: "⌚", correct: false, photoIndex: 3 }
                     ],
-                    correctPhotoIndex: 3
+                    correctPhotoIndex: 4
                 }
             ]
         };
