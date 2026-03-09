@@ -914,7 +914,6 @@ class BeautyQuestGame {
             this.config.theme = e.target.value;
         });
 
-        // Mouse trail effect with CSS hearts and stars
         this.initMouseTrail();
     }
 
@@ -927,7 +926,7 @@ class BeautyQuestGame {
 
     initMouseTrail() {
         let lastTrailTime = 0;
-        const trailColors = ['#ff69b4', '#ffffff', '#87ceeb']; // Розовые, белые, голубые
+        const trailColors = ['#ff69b4', '#ffffff', '#87ceeb'];
         
         document.addEventListener('mousemove', (e) => {
             const currentTime = Date.now();
@@ -943,15 +942,6 @@ class BeautyQuestGame {
                     trail.className = 'mouse-trail-heart';
                     trail.style.background = color;
                     trail.style.boxShadow = `0 0 10px ${color}, 0 0 20px #ffd700`;
-                    
-                    const pseudoStyle = document.createElement('style');
-                    pseudoStyle.textContent = `
-                        .mouse-trail-heart::before, .mouse-trail-heart::after {
-                            background: ${color} !important;
-                            box-shadow: 0 0 10px ${color}, 0 0 20px #ffd700 !important;
-                        }
-                    `;
-                    trail.appendChild(pseudoStyle);
                 } else {
                     trail.className = 'mouse-trail-star';
                 }
@@ -979,7 +969,7 @@ class BeautyQuestGame {
         const centerY = container.offsetHeight / 2;
         const radius = 120;
         
-        function animateOrb() {
+        const animateOrb = () => {
             const elapsed = Date.now() - startTime;
             const progress = elapsed / duration;
             
@@ -992,19 +982,19 @@ class BeautyQuestGame {
                 orb.style.top = y + 'px';
                 
                 if (elapsed % 150 < 50) {
-                    createTrail(x + 25, y + 25, container);
+                    this.createTrail(x + 25, y + 25, container);
                 }
                 
                 requestAnimationFrame(animateOrb);
             } else {
                 orb.remove();
             }
-        }
+        };
         
         animateOrb();
     }
 
-    function createTrail(x, y, container) {
+    createTrail(x, y, container) {
         const heart = document.createElement('div');
         heart.className = 'heart';
         heart.style.left = x + 'px';
@@ -1032,7 +1022,10 @@ class BeautyQuestGame {
             }, i * 100);
         }
         
-        setTimeout(() => { heart.remove(); star.remove(); }, 1800);
+        setTimeout(() => { 
+            if (heart.parentNode) heart.remove(); 
+            if (star.parentNode) star.remove(); 
+        }, 1800);
     }
 
     shuffleArray(array) {
