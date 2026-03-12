@@ -14,20 +14,18 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #93c5dd 0%, #c67a8f 50%, #e6d480 100%);
-            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow-x: hidden;
         }
 
         .game-container {
             width: 100%;
             max-width: 1200px;
             height: 90vh;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
@@ -60,7 +58,6 @@
             font-size: 72px;
             font-weight: bold;
             text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
             animation: titleGlow 2s ease infinite;
         }
 
@@ -144,11 +141,85 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .progress-container {
+        /* Timer Controls */
+        .timer-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        .timer-value {
+            font-size: 28px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .timer-active .timer-value {
+            animation: timerPulse 1s infinite;
+        }
+
+        .timer-warning .timer-value {
+            color: #ff6b6b;
+        }
+
+        @keyframes timerPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+        }
+
+        /* Timer Options */
+        .timer-options {
+            display: flex;
+            gap: 8px;
+        }
+
+        .timer-option-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .timer-option-btn:hover {
             background: rgba(255,255,255,0.4);
-            height: 12px;
+        }
+
+        .timer-option-btn.active {
+            background: rgba(255,255,255,0.9);
+            color: #c67a8f;
+            border-color: white;
+        }
+
+        /* Timer Progress Bar */
+        .timer-progress-bar {
+            background: rgba(255,255,255,0.4);
+            height: 8px;
             border-radius: 10px;
             overflow: hidden;
+            flex-grow: 1;
+            max-width: 300px;
+        }
+
+        .timer-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #5cb85c 0%, #f0ad4e 50%, #d9534f 100%);
+            transition: width 0.1s linear;
+            border-radius: 10px;
+        }
+
+        .progress-container {
+            flex-grow: 1;
+            max-width: 300px;
         }
 
         .progress-bar {
@@ -175,7 +246,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 30px 30px 30px 320px; 
+            padding: 30px 30px 30px 320px;
             position: relative;
         }
 
@@ -189,11 +260,6 @@
             position: relative;
             background: #fff;
             border: 5px solid rgba(156, 185, 206, 0.5);
-            transition: filter 0.5s ease;
-        }
-
-        .photo-container.transitioning {
-            filter: brightness(0.3);
         }
 
         .client-photo {
@@ -218,26 +284,21 @@
             z-index: 100;
         }
 
-        /* --- FIX 1: MESSAGE PLAQUE POSITIONING --- */
+        /* --- MESSAGE PLAQUE POSITIONING --- */
         .message-plaque {
             position: absolute;
-            /* Увеличено с 380px до 450px для полного исключения перекрытия кнопок */
             top: 450px; 
-            
             left: 30px; 
-            
             background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%);
             color: white;
             padding: 20px 25px;
             border-radius: 25px;
-            box-shadow: 
-                0 8px 0 #5a7080,
-                0 15px 30px rgba(111, 141, 157, 0.4);
+            box-shadow: 0 8px 0 #5a7080, 0 15px 30px rgba(111, 141, 157, 0.4);
             max-width: 350px;
             width: 300px;
             z-index: 200;
             opacity: 0;
-            transform: translateY(50px); /* Starts slightly lower */
+            transform: translateY(50px); 
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             pointer-events: none;
         }
@@ -248,7 +309,6 @@
             pointer-events: auto;
         }
 
-        /* Triangle pointing UP to steps panel */
         .message-plaque::before {
             content: '';
             position: absolute;
@@ -266,10 +326,8 @@
             line-height: 1.4;
             text-align: center;
             font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* Close Button */
         .close-btn {
             position: absolute;
             top: 8px;
@@ -332,18 +390,10 @@
 
         @keyframes orbGlow {
             from { 
-                box-shadow: 
-                    0 0 15px currentColor, 
-                    0 0 30px currentColor, 
-                    0 0 45px currentColor,
-                    0 0 60px rgba(255,105,180,0.6);
+                box-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px currentColor, 0 0 60px rgba(255,105,180,0.6);
             }
             to { 
-                box-shadow: 
-                    0 0 25px currentColor, 
-                    0 0 50px currentColor, 
-                    0 0 75px currentColor,
-                    0 0 90px rgba(255,105,180,0.8);
+                box-shadow: 0 0 25px currentColor, 0 0 50px currentColor, 0 0 75px currentColor, 0 0 90px rgba(255,105,180,0.8);
             }
         }
 
@@ -473,7 +523,8 @@
         /* Right Side - Quiz */
         .quiz-section {
             width: 500px;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
             padding: 50px;
             display: flex;
             flex-direction: column;
@@ -587,14 +638,15 @@
             box-shadow: 0 5px 15px rgba(168, 96, 117, 0.3);
         }
 
-        /* Final Screen */
+        /* FINAL SCREEN - FIXED TRANSPARENCY */
         .final-screen {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #93c5dd 0%, #c67a8f 100%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -662,10 +714,7 @@
             height: 70px;
             border-radius: 50%;
             background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%);
-            box-shadow: 
-                0 6px 0 #5a7080,
-                0 10px 20px rgba(111, 141, 157, 0.4),
-                inset 0 -3px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 0 #5a7080, 0 10px 20px rgba(111, 141, 157, 0.4), inset 0 -3px 8px rgba(0,0,0,0.1);
             animation: arrowPulse 1.5s ease infinite;
             position: relative;
         }
@@ -725,64 +774,6 @@
         .final-btn:active {
             top: 6px;
             box-shadow: 0 2px 0 #5a7080, 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        /* Mouse Trail */
-        .mouse-trail-heart {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            width: 16px;
-            height: 16px;
-            background: #ff69b4;
-            transform: rotate(45deg);
-            box-shadow: 0 0 10px #ff69b4, 0 0 20px #ffd700;
-            animation: trailFade 1s ease-out forwards;
-        }
-
-        .mouse-trail-heart::before, .mouse-trail-heart::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: #ff69b4;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ff69b4, 0 0 20px #ffd700;
-        }
-
-        .mouse-trail-heart::before { left: -8px; }
-        .mouse-trail-heart::after { top: -8px; }
-
-        .mouse-trail-star {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            width: 20px;
-            height: 20px;
-            background: white;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            box-shadow: 0 0 10px white, 0 0 20px #ffd700;
-            animation: trailFade 1s ease-out forwards;
-        }
-
-        @keyframes trailFade {
-            0% { opacity: 1; transform: scale(1) rotate(0deg); }
-            100% { opacity: 0; transform: scale(0.3) rotate(180deg) translateY(-50px); }
-        }
-
-        /* Confetti */
-        .confetti {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            top: -20px;
-            animation: confettiFall 3s ease-out forwards;
-            z-index: 1000;
-        }
-
-        @keyframes confettiFall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
 
         /* Responsive */
@@ -867,6 +858,26 @@
                 </select>
             </div>
         </div>
+        
+        <!-- NEW TIMER SECTION -->
+        <div class="timer-wrapper" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+            <div class="timer-controls">
+                <span style="font-weight: bold;">⏱ Время:</span>
+                <div class="timer-options">
+                    <button class="timer-option-btn active" onclick="game.setTimerDuration(15)">15 сек</button>
+                    <button class="timer-option-btn" onclick="game.setTimerDuration(30)">30 сек</button>
+                    <button class="timer-option-btn" onclick="game.setTimerDuration(45)">45 сек</button>
+                    <button class="timer-option-btn" onclick="game.setTimerDuration(60)">60 сек</button>
+                </div>
+            </div>
+            <div class="timer-value" id="timerValue">∞</div>
+            <div class="progress-container">
+                <div class="timer-progress-bar" id="timerProgressBar">
+                    <div class="timer-progress" id="timerProgress"></div>
+                </div>
+            </div>
+        </div>
+        
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
         </div>
@@ -899,7 +910,7 @@
                 </div>
             </div>
 
-            <!-- Message Plaque - Positioned Below Steps -->
+            <!-- Message Plaque -->
             <div class="message-plaque" id="messagePlaque">
                 <div class="close-btn" onclick="game.closeMessage()"></div>
                 <div class="message-text" id="messageText"></div>
@@ -960,6 +971,10 @@ class BeautyQuestGame {
             correctAnswers: 0,
             totalAnswers: 0,
             gameStarted: false,
+            timerDuration: Infinity, // ∞ по умолчанию
+            timerActive: false,
+            timerInterval: null,
+            timeRemaining: Infinity,
             
             // Цвета игры для радужной магии
             gameColors: ['#93c5dd', '#c67a8f', '#9cb9ce', '#e6d480', '#ffcc99'],
@@ -985,6 +1000,18 @@ class BeautyQuestGame {
                 "Какая красота! Хочу смотреться целый день!",
                 "О да! Именно так я себя и представляла!",
                 "Это чудо! Вы творите волшебство!"
+            ],
+            
+            // ФРАЗЫ ДЛЯ ТАЙМЕРА
+            timerMessages: [
+                "😴 Клиент уснул...",
+                "🌙 Клиент уже мечтает о сне...",
+                "👀 Клиент смотрит на часы...",
+                "🙄 Клиент проверяет время в 10 раз!",
+                "🍰 Клиенту нужен кофе и десерт!",
+                "🍔 Голодный клиент ждёт обед",
+                "🤦‍♀️ Клиент вздыхает слишком часто...",
+                "😡 Серьёзный клиент недоволен!"
             ],
             
             questions: [
@@ -1049,7 +1076,10 @@ class BeautyQuestGame {
             messageText: document.getElementById('messageText'),
             difficultySelect: document.getElementById('difficultySelect'),
             themeSelect: document.getElementById('themeSelect'),
-            gameContainer: document.getElementById('gameContainer')
+            gameContainer: document.getElementById('gameContainer'),
+            timerValue: document.getElementById('timerValue'),
+            timerProgressBar: document.getElementById('timerProgressBar'),
+            timerProgress: document.getElementById('timerProgress')
         };
 
         this.init();
@@ -1074,6 +1104,93 @@ class BeautyQuestGame {
         this.ui.startScreen.classList.add('hidden');
         this.ui.clientPhoto.src = this.config.photos[0];
         this.loadQuestion();
+    }
+
+    setTimerDuration(seconds) {
+        this.config.timerDuration = seconds;
+        this.config.timeRemaining = seconds;
+        
+        // Обновить активную кнопку
+        const buttons = document.querySelectorAll('.timer-option-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        // Обновить отображение
+        this.updateTimerDisplay();
+        
+        // Если игра уже идет, перезапустить таймер
+        if (this.config.gameStarted && this.config.currentStep < this.config.questions.length) {
+            this.resetTimer();
+        }
+    }
+
+    updateTimerDisplay() {
+        if (this.config.timerDuration === Infinity) {
+            this.ui.timerValue.textContent = '∞';
+            this.ui.timerValue.parentElement.classList.remove('timer-active', 'timer-warning');
+            return;
+        }
+        
+        this.ui.timerValue.textContent = Math.ceil(this.config.timeRemaining);
+        
+        if (this.config.timeRemaining <= 10) {
+            this.ui.timerValue.parentElement.classList.add('timer-warning');
+        } else {
+            this.ui.timerValue.parentElement.classList.remove('timer-warning');
+        }
+    }
+
+    resetTimer() {
+        if (this.config.timerInterval) {
+            clearInterval(this.config.timerInterval);
+        }
+        
+        this.config.timerActive = true;
+        this.config.timeRemaining = this.config.timerDuration;
+        
+        if (this.config.timerDuration !== Infinity) {
+            this.ui.timerValue.parentElement.classList.add('timer-active');
+            this.updateTimerDisplay();
+            
+            this.config.timerInterval = setInterval(() => {
+                this.config.timeRemaining--;
+                this.updateTimerDisplay();
+                
+                // Обновляем прогресс бар
+                const progress = (this.config.timeRemaining / this.config.timerDuration) * 100;
+                this.ui.timerProgress.style.width = progress + '%';
+                
+                if (this.config.timeRemaining <= 0) {
+                    clearInterval(this.config.timerInterval);
+                    this.handleTimerExpired();
+                }
+            }, 1000);
+        }
+    }
+    
+    handleTimerExpired() {
+        this.config.timerActive = false;
+        if (this.ui.timerValue.parentElement) {
+            this.ui.timerValue.parentElement.classList.remove('timer-active', 'timer-warning');
+        }
+        
+        // Показать сообщение о времени
+        const randomMsg = this.config.timerMessages[Math.floor(Math.random() * this.config.timerMessages.length)];
+        this.showMessage(randomMsg, true);
+        
+        // Вибрация экрана для привлечения внимания
+        this.vibrateScreen();
+    }
+    
+    vibrateScreen() {
+        const container = this.ui.photoContainer;
+        container.style.transform = 'translateX(5px)';
+        setTimeout(() => {
+            container.style.transform = 'translateX(-5px)';
+            setTimeout(() => {
+                container.style.transform = 'translateX(0)';
+            }, 100);
+        }, 100);
     }
 
     initMouseTrail() {
@@ -1256,6 +1373,9 @@ class BeautyQuestGame {
 
         this.ui.feedbackMessage.className = 'feedback-message';
         this.ui.feedbackMessage.textContent = '';
+        
+        // Запускаем таймер
+        this.resetTimer();
     }
 
     checkAnswer(isCorrect, btnElement, photoIndex) {
@@ -1289,6 +1409,23 @@ class BeautyQuestGame {
         this.ui.feedbackMessage.className = `feedback-message show ${type}`;
     }
 
+    showMessage(text, isTimer = false) {
+        this.ui.messageText.textContent = text;
+        this.ui.messagePlaque.classList.add('show');
+        
+        if (isTimer) {
+            // Вибрация при истечении времени
+            this.vibrateScreen();
+            // Уменьшаем размер плашки
+            this.ui.messagePlaque.style.transform = 'translateY(0) scale(0.95)';
+            setTimeout(() => {
+                this.ui.messagePlaque.style.transform = 'translateY(0) scale(1)';
+            }, 200);
+        }
+        
+        this.createSparklesAroundMessage();
+    }
+
     applyTransformation(photoIndex) {
         this.createMagicOrb();
         
@@ -1305,7 +1442,7 @@ class BeautyQuestGame {
                 
                 // Показать плашку после КАЖДОГО преображения
                 if (photoIndex > 0 && photoIndex <= 4) {
-                    this.showMessage();
+                    this.showMessage("Вы молодец! Образ обновился!");
                 }
             };
         }, 1250);
@@ -1314,31 +1451,6 @@ class BeautyQuestGame {
             this.config.currentStep++;
             this.loadQuestion();
         }, 2500);
-    }
-
-    showMessage() {
-        // --- FIX 2: NO REPEATING PHRASES LOGIC ---
-        // Если массив переполнен или пустой, перезаполняем его новыми случайными фразами
-        if (!this.config.availablePhrases || this.config.availablePhrases.length === 0) {
-            this.config.availablePhrases = this.shuffleArray(this.config.phrases);
-        }
-
-        // Получаем случайную фразу из доступных
-        const randomIndex = Math.floor(Math.random() * this.config.availablePhrases.length);
-        const chosenPhrase = this.config.availablePhrases[randomIndex];
-        
-        // Удаляем её из списка, чтобы больше она не выбиралась в этой игре
-        this.config.availablePhrases.splice(randomIndex, 1);
-        
-        // Если массив стал слишком маленьким (< 3), можно перезагрузить пул, но это не критично
-        if (this.config.availablePhrases.length < 2) {
-             this.config.availablePhrases = this.shuffleArray(this.config.phrases);
-        }
-
-        this.ui.messageText.textContent = chosenPhrase;
-        this.ui.messagePlaque.classList.add('show');
-        
-        this.createSparklesAroundMessage();
     }
 
     closeMessage() {
