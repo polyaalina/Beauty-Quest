@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор Beauty Quest</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #93c5dd 0%, #c67a8f 50%, #e6d480 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .editor-container { width: 100%; max-width: 1400px; height: 90vh; background: rgba(255, 255, 255, 0.95); border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; overflow: hidden; }
+        /* --- LEFT SIDEBAR --- */
+        .settings-panel { width: 400px; background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%); padding: 40px 30px; border-right: 5px solid rgba(156, 185, 206, 0.3); overflow-y: auto; }
+        .panel-title { font-size: 32px; font-weight: bold; color: #c67a8f; margin-bottom: 30px; text-align: center; }
+        .control-group { margin-bottom: 35px; background: rgba(255,255,255,0.9); padding: 25px; border-radius: 20px; box-shadow: 0 8px 20px rgba(198, 122, 143, 0.2); }
+        .control-label { font-size: 18px; font-weight: bold; color: #6f8d9d; margin-bottom: 15px; display: block; }
+        input[type="range"] { width: 100%; height: 10px; border-radius: 10px; background: linear-gradient(90deg, #93c5dd, #c67a8f, #e6d480); outline: none; appearance: none; cursor: pointer; }
+        input[type="range"]::-webkit-slider-thumb { appearance: none; width: 25px; height: 25px; border-radius: 50%; background: #fff; border: 3px solid #c67a8f; cursor: pointer; box-shadow: 0 4px 10px rgba(198, 122, 143, 0.4); transition: all 0.3s ease; }
+        .slider-value { text-align: right; font-size: 16px; color: #c67a8f; font-weight: bold; margin-top: 10px; }
+        select { width: 100%; padding: 12px 15px; border: 2px solid #93c5dd; border-radius: 15px; background: white; font-size: 16px; color: #6f8d9d; font-weight: bold; cursor: pointer; }
+        .checkbox-group { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        input[type="checkbox"] { width: 20px; height: 20px; accent-color: #c67a8f; }
+        label.checkbox-label { font-size: 16px; color: #6f8d9d; cursor: pointer; font-weight: 600; }
+        .btn { padding: 15px 30px; border: none; border-radius: 20px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; margin-bottom: 10px; width: 100%; }
+        .btn-primary { background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%); color: white; box-shadow: 0 6px 0 #5a7080; }
+        .btn-success { background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%); color: white; }
+        .file-input-wrapper { position: relative; margin-bottom: 20px; }
+        .file-input-label { display: block; padding: 12px 20px; background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%); color: white; border-radius: 15px; cursor: pointer; text-align: center; font-weight: bold; }
+        .file-input-label::after { content: ' 📂'; margin-left: 10px; }
+        .file-input { position: absolute; top: 0; left: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+        .preview-bg { width: 100%; height: 100px; border-radius: 10px; margin-top: 10px; background-size: cover; background-position: center; border: 3px solid #ddd; }
+        .save-notification { padding: 15px; background: #c67a8f; color: white; border-radius: 15px; text-align: center; margin-bottom: 20px; display: none; }
+        
+        /* --- RIGHT SIDE - GAME PREVIEW --- */
+        .game-preview { flex: 1; padding: 40px; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #93c5dd 0%, #c67a8f 50%, #e6d480 100%); }
+        .preview-frame { width: 100%; max-width: 1000px; height: 100%; border: none; border-radius: 20px; box-shadow: 0 25px 70px rgba(0,0,0,0.3); background: white; }
+
+        @media (max-width: 1400px) {
+            .editor-container { flex-direction: column; height: auto; }
+            .settings-panel { width: 100%; max-height: 400px; }
+            .game-preview { height: 90vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <!-- SETTINGS PANEL -->
+        <div class="settings-panel">
+            <h1 class="panel-title">🎨 Редактор Игры</h1>
+            
+            <div class="save-notification" id="saveNotification">✅ Настройки сохранены!</div>
+
+            <div class="control-group">
+                <label class="control-label">⏱ Таймер</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="timerEnabled" checked onchange="saveSettings()">
+                    <label class="checkbox-label" for="timerEnabled">Включить таймер</label>
+                </div>
+                <label class="control-label" for="timerDurationSlider">Время (секунды):</label>
+                <input type="range" id="timerDurationSlider" min="10" max="120" value="30" step="5" oninput="updateTimerDisplay(); saveSettings()">
+                <div class="slider-value" id="timerDurationValue">30 сек</div>
+                <label class="control-label" style="margin-top: 15px;">Фраза при истечении:</label>
+                <select id="timerMessage" onchange="saveSettings()">
+                    <option value="😴 Клиент уснул...">😴 Клиент уснул...</option>
+                    <option value="🌙 Мечтает о сне...">🌙 Мечтает о сне...</option>
+                    <option value="👀 Смотрит на часы...">👀 Смотрит на часы...</option>
+                    <option value="🙄 Проверяет время...">🙄 Проверяет время...</option>
+                    <option value="🍰 Нужен кофе...">🍰 Нужен кофе...</option>
+                    <option value="🍔 Голоден...">🍔 Голоден...</option>
+                    <option value="🤦‍♀️ Вздыхает...">🤦‍♀️ Вздыхает...</option>
+                    <option value="😡 Недоволен!">😡 Недоволен!</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">💬 Сообщения</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="randomMessages" checked onchange="saveSettings()">
+                    <label class="checkbox-label" for="randomMessages">Случайные сообщения</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showSuccessMessage" checked onchange="saveSettings()">
+                    <label class="checkbox-label" for="showSuccessMessage">Показывать "Образ обновился"</label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">🎨 Тема оформления</label>
+                <label class="control-label" for="themeSelect">Цветовая схема:</label>
+                <select id="themeSelect" onchange="saveSettings()">
+                    <option value="glamour">🎀 Гламур</option>
+                    <option value="minimal">⚫ Минимализм</option>
+                    <option value="vintage">🕰 Винтаж</option>
+                </select>
+                <label class="control-label" style="margin-top: 15px;">Основной цвет акцента:</label>
+                <input type="color" id="accentColor" value="#c67a8f" oninput="saveSettings()" style="width: 100%; height: 40px; border: none; border-radius: 10px;">
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">🖼 Фон игры</label>
+                <div class="file-input-wrapper">
+                    <label class="file-input-label" for="bgImageInput">Загрузить фон</label>
+                    <input type="file" id="bgImageInput" accept="image/*" class="file-input" onchange="loadBackground(event)">
+                </div>
+                <div class="preview-bg" id="bgPreview"></div>
+            </div>
+
+            <div class="control-group">
+                <button class="btn btn-success" onclick="openGameInNewWindow()">🎮 Открыть игру целиком</button>
+                <button class="btn btn-primary" onclick="resetToDefaults()">🔄 Сбросить все настройки</button>
+            </div>
+        </div>
+
+        <!-- GAME PREVIEW -->
+        <div class="game-preview">
+            <iframe id="gameFrame" class="preview-frame" src=""></iframe>
+        </div>
+    </div>
+
+    <script>
+        const defaultSettings = {
+            timerEnabled: true, timerDuration: 30, timerMessage: "😴 Клиент уснул...",
+            randomMessages: true, showSuccessMessage: true, messageLimit: 6,
+            theme: "glamour", accentColor: "#c67a8f", bgOpacity: 0.9, backgroundImage: ""
+        };
+        let currentSettings = {...defaultSettings};
+
+        function loadSettings() {
+            const saved = localStorage.getItem('beautyQuestSettings');
+            if (saved) {
+                currentSettings = JSON.parse(saved);
+                document.getElementById('timerEnabled').checked = currentSettings.timerEnabled;
+                document.getElementById('timerDurationSlider').value = currentSettings.timerDuration;
+                document.getElementById('timerMessage').value = currentSettings.timerMessage;
+                document.getElementById('randomMessages').checked = currentSettings.randomMessages;
+                document.getElementById('showSuccessMessage').checked = currentSettings.showSuccessMessage;
+                document.getElementById('themeSelect').value = currentSettings.theme;
+                document.getElementById('accentColor').value = currentSettings.accentColor;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const duration = document.getElementById('timerDurationSlider').value;
+            document.getElementById('timerDurationValue').textContent = `${duration} сек`;
+        }
+
+        function saveSettings() {
+            currentSettings.timerEnabled = document.getElementById('timerEnabled').checked;
+            currentSettings.timerDuration = parseInt(document.getElementById('timerDurationSlider').value);
+            currentSettings.timerMessage = document.getElementById('timerMessage').value;
+            currentSettings.randomMessages = document.getElementById('randomMessages').checked;
+            currentSettings.showSuccessMessage = document.getElementById('showSuccessMessage').checked;
+            currentSettings.theme = document.getElementById('themeSelect').value;
+            currentSettings.accentColor = document.getElementById('accentColor').value;
+            
+            localStorage.setItem('beautyQuestSettings', JSON.stringify(currentSettings));
+            showSaveNotification();
+            updatePreview();
+        }
+
+        function showSaveNotification() {
+            const n = document.getElementById('saveNotification');
+            n.style.display = 'block';
+            setTimeout(() => n.style.display = 'none', 2000);
+        }
+
+        function loadBackground(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('bgPreview').style.backgroundImage = `url(${e.target.result})`;
+                    updatePreview();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function resetToDefaults() {
+            currentSettings = {...defaultSettings};
+            localStorage.removeItem('beautyQuestSettings');
+            location.reload();
+        }
+
+        function openGameInNewWindow() {
+            window.open(getGameUrl(), '_blank');
+        }
+
+        function getGameUrl() {
+            return 'index.html' + Object.entries(currentSettings)
+                .map(([k, v]) => k === 'backgroundImage' ? '' : `&${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+                .join('')
+                .replace(/&$/, '');
+        }
+
+        function updatePreview() {
+            const iframe = document.getElementById('gameFrame');
+            iframe.src = getGameUrl();
+        }
+
+        window.addEventListener('load', () => {
+            loadSettings();
+            updatePreview();
+        });
+    </script>
+</body>
+</html>
