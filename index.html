@@ -5,965 +5,400 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Beauty Quest: Салон Преображений</title>
 <style>
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-body {
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-background: linear-gradient(135deg, #93c5dd 0%, #c67a8f 50%, #e6d480 100%);
-min-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 20px;
-}
-.game-container {
-width: 100%;
-max-width: 1200px;
-height: 90vh;
-background: rgba(255, 255, 255, 0.9);
-border-radius: 30px;
-box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-overflow: hidden;
-display: flex;
-flex-direction: column;
-}
-/* START SCREEN */
-.start-screen {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: linear-gradient(135deg, #93c5dd 0%, #c67a8f 50%, #e6d480 100%);
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-z-index: 2000;
-color: white;
-}
-.start-screen.hidden {
-display: none;
-}
-.salon-title {
-font-size: 72px;
-font-weight: bold;
-text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
-animation: titleGlow 2s ease infinite;
-}
-@keyframes titleGlow {
-0%, 100% { text-shadow: 4px 4px 8px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5); }
-50% { text-shadow: 4px 4px 8px rgba(0,0,0,0.3), 0 0 40px rgba(255,255,255,0.8); }
-}
-.salon-subtitle {
-font-size: 32px;
-margin-bottom: 60px;
-text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-.start-btn {
-padding: 30px 80px;
-font-size: 28px;
-background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
-color: #c67a8f;
-border: none;
-border-radius: 50px;
-cursor: pointer;
-font-weight: bold;
-box-shadow: 0 10px 0 #d0d0d0, 0 20px 50px rgba(0,0,0,0.3);
-transition: all 0.3s ease;
-position: relative;
-top: 0;
-}
-.start-btn:hover {
-transform: translateY(-5px) scale(1.05);
-box-shadow: 0 15px 0 #d0d0d0, 0 25px 60px rgba(0,0,0,0.4);
-}
-.start-btn:active {
-top: 8px;
-box-shadow: 0 2px 0 #d0d0d0, 0 10px 30px rgba(0,0,0,0.3);
-}
-/* Header */
-.game-header {
-background: linear-gradient(135deg, #9cb9ce 0%, #c67a8f 100%);
-padding: 20px 30px;
-color: white;
-box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-.header-top {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 10px;
-flex-wrap: wrap;
-gap: 15px;
-}
-.step-indicator {
-font-size: 24px;
-font-weight: bold;
-display: flex;
-align-items: center;
-gap: 10px;
-}
-.controls {
-display: flex;
-gap: 10px;
-flex-wrap: wrap;
-align-items: center;
-}
-.control-select {
-padding: 8px 15px;
-border: none;
-border-radius: 20px;
-background: rgba(255,255,255,0.9);
-color: #6f8d9d;
-font-weight: bold;
-cursor: pointer;
-outline: none;
-font-size: 14px;
-box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-/* ⏱️ КНОПКА ЗАПУСКА ТАЙМЕРА */
-.timer-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
-    color: #c67a8f;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 14px;
-    box-shadow: 0 4px 0 #d0d0d0, 0 8px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ff69b4" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 12 12, auto; }
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
     display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.timer-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 #d0d0d0, 0 12px 20px rgba(0,0,0,0.25);
-}
-.timer-btn:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #d0d0d0, 0 4px 10px rgba(0,0,0,0.2);
-}
-.timer-btn.running {
-    background: linear-gradient(180deg, #c67a8f 0%, #a86075 100%);
-    color: white;
-    box-shadow: 0 4px 0 #8a5060, 0 8px 15px rgba(198, 122, 143, 0.4);
-    animation: timerPulse 1s ease infinite;
-}
-@keyframes timerPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-/* 🌈 РАДУЖНЫЙ ТАЙМЕР */
-.timer-container {
-    margin-top: 15px;
-    background: rgba(255,255,255,0.3);
-    height: 10px;
-    border-radius: 5px;
-    overflow: hidden;
-}
-.timer-bar {
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg, 
-        #ff0000, #ff7f00, #ffff00, #00ff00, 
-        #0000ff, #4b0082, #9400d3, #ff0000);
-    background-size: 400% 100%;
-    border-radius: 5px;
-    animation: rainbow-move 2s linear infinite, timer-shrink 30s linear forwards;
-}
-@keyframes rainbow-move {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 400% 50%; }
-}
-@keyframes timer-shrink {
-    0% { width: 100%; }
-    100% { width: 0%; }
-}
-.timer-text {
-    font-size: 14px;
-    text-align: center;
-    margin-top: 5px;
-    opacity: 0.9;
-}
-
-/* 🚨 МОДАЛЬНОЕ ОКНО ТАЙМЕРА */
-.timeout-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
     justify-content: center;
     align-items: center;
-    z-index: 3000;
-}
-.timeout-content {
-    background: white;
-    padding: 40px;
-    border-radius: 25px;
-    text-align: center;
-    max-width: 450px;
-    width: 90%;
-    animation: popup-appear 0.5s ease;
-}
-@keyframes popup-appear {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-.timeout-icon {
-    font-size: 70px;
-    margin-bottom: 20px;
-}
-.timeout-title {
-    color: #c67a8f;
-    font-size: 28px;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-.timeout-message {
-    color: #666;
-    font-size: 18px;
-    margin-bottom: 25px;
-    line-height: 1.6;
-}
-.timeout-btn {
-    background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%);
-    color: white;
-    border: none;
-    padding: 18px 50px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 6px 0 #5a7080, 0 15px 30px rgba(111, 141, 157, 0.4);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 auto;
-}
-.timeout-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 0 #5a7080, 0 20px 40px rgba(111, 141, 157, 0.5);
+    padding: 20px;
+    transition: background 0.5s ease;
 }
 
-/* Main Game Area */
-.game-main {
-flex: 1;
-display: flex;
-overflow: hidden;
-position: relative;
+.game-container { 
+    width: 100%; max-width: 1200px; height: 90vh; 
+    background: rgba(255, 255, 255, 0.0); 
+    border-radius: 30px; border: 2px solid rgba(255,255,255,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden; 
+    display: flex; flex-direction: column; position: relative; 
+    backdrop-filter: blur(5px);
 }
-/* Left Side - Photo */
-.photo-section {
-flex: 1;
-background: linear-gradient(180deg, rgba(147, 197, 221, 0.2) 0%, rgba(198, 122, 143, 0.2) 100%);
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 30px 30px 30px 320px;
-position: relative;
+
+/* START SCREEN */
+.start-screen { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+    display: flex; flex-direction: column; justify-content: center; align-items: center; 
+    z-index: 2000; color: white; text-align: center; 
 }
-.photo-container {
-width: 100%;
-max-width: 450px;
-height: 600px;
-border-radius: 25px;
-overflow: hidden;
-box-shadow: 0 25px 70px rgba(0,0,0,0.3);
-position: relative;
-background: #fff;
-border: 5px solid rgba(156, 185, 206, 0.5);
+.start-screen.hidden { display: none; }
+.salon-title { font-size: 72px; font-weight: bold; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); margin-bottom: 40px; animation: titleFloat 3s ease-in-out infinite; }
+@keyframes titleFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.levels-container { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+.level-card {
+    background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 20px; padding: 30px; width: 220px; cursor: pointer;
+    transition: all 0.3s ease; backdrop-filter: blur(5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
-.client-photo {
-width: 100%;
-height: 100%;
-object-fit: cover;
-transition: opacity 0.6s ease;
+.level-card:hover { transform: translateY(-10px) scale(1.05); background: rgba(255,255,255,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.2); border-color: white; }
+.level-icon { font-size: 60px; margin-bottom: 15px; display: block; }
+.level-name { font-size: 24px; font-weight: bold; text-shadow: 1px 1px 5px rgba(0,0,0,0.2); }
+
+.bg-selector {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: rgba(255,255,255,0.3); padding: 10px 20px; border-radius: 50px;
+    backdrop-filter: blur(5px); display: flex; gap: 10px; align-items: center;
+    z-index: 2001; border: 1px solid rgba(255,255,255,0.5);
 }
-.client-photo.fade-out {
-opacity: 0;
+.bg-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; cursor: pointer; transition: transform 0.2s; }
+.bg-btn:hover { transform: scale(1.2); }
+.file-upload-label {
+    display: inline-block; padding: 5px 15px; background: rgba(255,255,255,0.4);
+    border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer;
+    color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
-/* Magic Container */
-.magic-container {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-pointer-events: none;
-z-index: 100;
+.file-upload-label:hover { background: rgba(255,255,255,0.6); }
+#bgInput { display: none; }
+
+/* GAME HEADER */
+.game-header { 
+    background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
+    padding: 15px 30px; color: white; border-bottom: 1px solid rgba(255,255,255,0.2);
 }
-/* --- MESSAGE PLAQUE POSITIONING --- */
-.message-plaque {
-position: absolute;
-top: 450px;
-left: 30px;
-background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%);
-color: white;
-padding: 20px 25px;
-border-radius: 25px;
-box-shadow:
-0 8px 0 #5a7080,
-0 15px 30px rgba(111, 141, 157, 0.4);
-max-width: 350px;
-width: 300px;
-z-index: 200;
-opacity: 0;
-transform: translateY(50px);
-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-pointer-events: none;
-}
-.message-plaque.show {
-opacity: 1;
-transform: translateY(0);
-pointer-events: auto;
-}
-.message-plaque::before {
-content: '';
-position: absolute;
-top: -20px;
-left: 50%;
-transform: translateX(-50%);
-border-width: 0 20px 20px 20px;
-border-style: solid;
-border-color: transparent transparent #6f8d9d transparent;
-filter: drop-shadow(0 -4px 0 #5a7080);
-}
-.message-text {
-font-size: 16px;
-line-height: 1.4;
-text-align: center;
-font-weight: 600;
-}
-/* Close Button */
-.close-btn {
-position: absolute;
-top: 8px;
-right: 10px;
-width: 20px;
-height: 20px;
-cursor: pointer;
-z-index: 201;
-transition: transform 0.3s ease;
-}
-.close-btn:hover {
-transform: rotate(90deg);
-}
-.close-btn::before,
-.close-btn::after {
-content: '';
-position: absolute;
-top: 50%;
-left: 50%;
-width: 16px;
-height: 2px;
-background: white;
-border-radius: 2px;
-transform: translate(-50%, -50%) rotate(45deg);
-}
-.close-btn::after {
-transform: translate(-50%, -50%) rotate(-45deg);
-}
-/* Sparkles */
-.sparkle {
-position: absolute;
-width: 15px;
-height: 15px;
-background: radial-gradient(circle, white 0%, #ffd700 50%, transparent 70%);
-border-radius: 50%;
-animation: sparkleFloat 1.5s ease-in-out infinite;
-pointer-events: none;
-z-index: 202;
-opacity: 0;
-}
-@keyframes sparkleFloat {
-0%, 100% { transform: translateY(0) scale(1); opacity: 0; }
-50% { transform: translateY(-15px) scale(1.2); opacity: 1; }
-}
-/* Rainbow Magic Orb */
-.magic-orb {
-position: absolute;
-width: 35px;
-height: 35px;
-border-radius: 50%;
-z-index: 100;
-animation: orbGlow 0.5s ease-in-out infinite alternate;
-}
-@keyframes orbGlow {
-from {
-box-shadow:
-0 0 15px currentColor,
-0 0 30px currentColor,
-0 0 45px currentColor,
-0 0 60px rgba(255,105,180,0.6);
-}
-to {
-box-shadow:
-0 0 25px currentColor,
-0 0 50px currentColor,
-0 0 75px currentColor,
-0 0 90px rgba(255,105,180,0.8);
-}
-}
-/* Heart and Star Trail */
-.heart {
-position: absolute;
-width: 12px;
-height: 12px;
-background: #ff69b4;
-transform: rotate(45deg);
-box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
-animation: heartFloat 1.8s ease-out forwards;
-z-index: 90;
-}
-.heart::before, .heart::after {
-content: '';
-position: absolute;
-width: 12px;
-height: 12px;
-background: #ff69b4;
-border-radius: 50%;
-box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
-}
-.heart::before { left: -6px; }
-.heart::after { top: -6px; }
-@keyframes heartFloat {
-0% { opacity: 0; transform: rotate(45deg) scale(0); }
-30% { opacity: 1; transform: rotate(45deg) scale(1.3); }
-100% { opacity: 0; transform: rotate(45deg) scale(0.4) translateY(-80px); }
-}
-.star {
-position: absolute;
-width: 15px;
-height: 15px;
-background: white;
-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-box-shadow: 0 0 10px white, 0 0 20px #ffd700;
-animation: starTwinkle 1.8s ease-out forwards;
-}
-@keyframes starTwinkle {
-0% { opacity: 0; transform: scale(0) rotate(0deg); }
-30% { opacity: 1; transform: scale(1.4) rotate(90deg); }
-100% { opacity: 0; transform: scale(0.4) rotate(360deg) translateY(-80px); }
-}
-.sparkle-particle {
-position: absolute;
-width: 5px;
-height: 5px;
-border-radius: 50%;
-animation: sparkleFly 1.2s ease-out forwards;
-}
-@keyframes sparkleFly {
-0% { opacity: 1; transform: scale(0); }
-50% { opacity: 1; transform: scale(1.5); }
-100% { opacity: 0; transform: scale(0.3) translate(var(--tx), var(--ty)); }
-}
-/* Steps Panel */
-.steps-panel {
-position: absolute;
-top: 20px;
-left: 20px;
-background: rgba(255,255,255,0.98);
-padding: 25px;
-border-radius: 20px;
-box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-z-index: 10;
-min-width: 220px;
-}
-.step-item {
-display: flex;
-align-items: center;
-gap: 15px;
-margin: 15px 0;
-padding: 15px 18px;
-border-radius: 15px;
-transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-opacity: 0.5;
-cursor: default;
-background: linear-gradient(180deg, #93c5dd 0%, #6f8d9d 100%);
-box-shadow: 0 6px 0 #5a7080, 0 10px 10px rgba(0,0,0,0.2), inset 0 2px 5px rgba(255,255,255,0.4);
-color: white;
-position: relative;
-top: 0;
-}
-.step-item:hover {
-transform: translateY(-2px);
-box-shadow: 0 8px 0 #5a7080, 0 15px 20px rgba(0,0,0,0.25), inset 0 2px 5px rgba(255,255,255,0.4);
-}
-.step-item.active {
-opacity: 1;
-background: linear-gradient(180deg, #c67a8f 0%, #a86075 100%);
-box-shadow: 0 6px 0 #8a5060, 0 10px 10px rgba(198, 122, 143, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
-transform: scale(1.05) translateX(5px);
-}
-.step-item.completed {
-opacity: 1;
-background: linear-gradient(180deg, #9cb9ce 0%, #7a90a5 100%);
-box-shadow: 0 6px 0 #657890, 0 10px 10px rgba(156, 185, 206, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
-}
-.step-icon {
-width: 32px;
-height: 32px;
-background-size: contain;
-background-repeat: no-repeat;
-background-position: center;
-filter: brightness(0) invert(1);
-}
-.step-text {
-font-size: 16px;
-font-weight: 600;
-}
-/* Right Side - Quiz */
-.quiz-section {
-width: 500px;
-background: rgba(255, 255, 255, 0.8);
-backdrop-filter: blur(10px);
-padding: 50px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-box-shadow: -8px 0 30px rgba(0,0,0,0.1);
-}
-.question-card {
-background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%);
-color: white;
-padding: 35px;
-border-radius: 25px;
-margin-bottom: 35px;
-box-shadow: 0 8px 0 #5a7080, 0 15px 30px rgba(111, 141, 157, 0.4);
-position: relative;
-top: 0;
-}
-.question-title {
-font-size: 28px;
-margin-bottom: 15px;
-line-height: 1.3;
-font-weight: 700;
-}
-.question-hint {
-font-size: 15px;
-opacity: 0.95;
-font-style: italic;
-}
-.options-list {
-display: flex;
-flex-direction: column;
-gap: 18px;
-}
-.option-btn {
-padding: 25px;
-border: none;
-background: linear-gradient(180deg, #93c5dd 0%, #6f8d9d 100%);
-color: white;
-border-radius: 18px;
-cursor: pointer;
-font-size: 17px;
-font-weight: 600;
-transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-text-align: left;
-display: flex;
-align-items: center;
-gap: 18px;
-box-shadow: 0 6px 0 #5a7080, 0 10px 10px rgba(0,0,0,0.2), inset 0 2px 5px rgba(255,255,255,0.4);
-position: relative;
-top: 0;
-}
-.option-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 8px 0 #5a7080, 0 15px 20px rgba(0,0,0,0.25), inset 0 2px 5px rgba(255,255,255,0.4);
-}
-.option-btn.correct {
-background: linear-gradient(180deg, #9cb9ce 0%, #7a90a5 100%);
-box-shadow: 0 6px 0 #657890, 0 10px 10px rgba(156, 185, 206, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
-animation: correctPulse 0.7s ease;
-}
-.option-btn.wrong {
-background: linear-gradient(180deg, #c67a8f 0%, #a86075 100%);
-box-shadow: 0 6px 0 #8a5060, 0 10px 10px rgba(198, 122, 143, 0.4), inset 0 2px 5px rgba(255,255,255,0.4);
-animation: shake 0.6s ease;
-}
-@keyframes correctPulse {
-0%, 100% { transform: scale(1); }
-50% { transform: scale(1.05); }
-}
-@keyframes shake {
-0%, 100% { transform: translateX(0); }
-20%, 60% { transform: translateX(-12px); }
-40%, 80% { transform: translateX(12px); }
-}
-.feedback-message {
-margin-top: 25px;
-padding: 20px;
-border-radius: 15px;
-text-align: center;
-font-weight: bold;
-font-size: 18px;
-opacity: 0;
-transform: translateY(-15px);
-transition: all 0.4s ease;
-}
-.feedback-message.show {
-opacity: 1;
-transform: translateY(0);
-}
-.feedback-message.success {
-background: linear-gradient(180deg, #9cb9ce 0%, #7a90a5 100%);
-color: white;
-box-shadow: 0 5px 15px rgba(122, 144, 165, 0.3);
-}
-.feedback-message.error {
-background: linear-gradient(180deg, #c67a8f 0%, #a86075 100%);
-color: white;
-box-shadow: 0 5px 15px rgba(168, 96, 117, 0.3);
-}
+.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 15px; }
+.step-indicator { font-size: 20px; font-weight: bold; display: flex; align-items: center; gap: 10px; text-shadow: 1px 1px 5px rgba(0,0,0,0.3); }
+.controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.timer-btn { padding: 8px 15px; border: none; border-radius: 20px; background: rgba(255,255,255,0.9); color: #c67a8f; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 13px; transition: all 0.3s; }
+.timer-btn:hover { transform: translateY(-2px); background: white; }
+.timer-btn.running { background: #ff6b6b; color: white; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { transform: scale(1.05); } }
+.timer-container { margin-top: 10px; background: rgba(255,255,255,0.3); height: 8px; border-radius: 4px; overflow: hidden; }
+.timer-bar { height: 100%; width: 100%; background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #9400d3, #ff0000); background-size: 400% 100%; animation: rainbow-move 2s linear infinite, timer-shrink 30s linear forwards; }
+@keyframes rainbow-move { 100% { background-position: 400% 50%; } }
+@keyframes timer-shrink { 100% { width: 0%; } }
+.timer-text { font-size: 12px; text-align: center; margin-top: 4px; opacity: 0.9; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+.progress-container { background: rgba(255,255,255,0.3); height: 10px; border-radius: 5px; overflow: hidden; margin-top: 10px; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, #fff 0%, #ffcc99 100%); width: 0%; transition: width 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); border-radius: 5px; box-shadow: 0 0 10px rgba(255,255,255,0.6); }
+
+/* MAIN GAME AREA */
+.game-main { flex: 1; display: flex; overflow: hidden; position: relative; }
+.photo-section { flex: 1; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; padding: 20px 20px 20px 280px; position: relative; }
+.photo-container { width: 100%; max-width: 400px; height: 550px; border-radius: 25px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.2); position: relative; background: #fff; border: 4px solid rgba(255,255,255,0.6); }
+.client-photo { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.6s ease; }
+.client-photo.fade-out { opacity: 0; }
+.magic-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+
+.steps-panel { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.85); padding: 15px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 10; min-width: 180px; backdrop-filter: blur(5px); }
+.step-item { display: flex; align-items: center; gap: 10px; margin: 10px 0; padding: 10px; border-radius: 10px; transition: all 0.3s; opacity: 0.6; background: linear-gradient(180deg, #e0eafc 0%, #cfdef3 100%); color: #555; font-size: 14px; font-weight: 600; }
+.step-item.active { opacity: 1; background: linear-gradient(180deg, #ff9a9e 0%, #fecfef 100%); color: white; transform: scale(1.05) translateX(5px); box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3); }
+.step-item.completed { opacity: 1; background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 100%); color: white; }
+.step-icon { width: 24px; height: 24px; filter: brightness(0) invert(1); opacity: 0.8; }
+
+.message-plaque { position: absolute; top: 400px; left: 20px; background: rgba(255,255,255,0.9); color: #555; padding: 15px 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); max-width: 280px; width: auto; z-index: 200; opacity: 0; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; border: 2px solid white; }
+.message-plaque.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.message-plaque::before { content: ''; position: absolute; top: -10px; left: 20px; border-width: 0 10px 10px 10px; border-style: solid; border-color: transparent transparent white transparent; }
+.message-text { font-size: 14px; line-height: 1.4; text-align: center; font-weight: 700; color: #444; }
+.close-btn { position: absolute; top: 5px; right: 8px; width: 16px; height: 16px; cursor: pointer; opacity: 0.5; }
+.close-btn:hover { opacity: 1; }
+.close-btn::before, .close-btn::after { content: ''; position: absolute; top: 50%; left: 50%; width: 14px; height: 2px; background: #555; border-radius: 2px; transform: translate(-50%, -50%) rotate(45deg); }
+.close-btn::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+.quiz-section { width: 450px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); padding: 30px; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid rgba(255,255,255,0.2); }
+.question-card { background: rgba(255,255,255,0.9); color: #444; padding: 25px; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.question-title { font-size: 22px; margin-bottom: 10px; font-weight: 800; line-height: 1.2; }
+.question-hint { font-size: 14px; opacity: 0.7; font-style: italic; }
+.options-list { display: flex; flex-direction: column; gap: 12px; }
+.option-btn { padding: 18px; border: none; background: rgba(255,255,255,0.8); color: #444; border-radius: 15px; cursor: pointer; font-size: 16px; font-weight: 600; transition: all 0.2s; text-align: left; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.option-btn:hover { transform: translateY(-3px); background: white; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.option-btn.correct { background: #a8edea; color: #006064; animation: pop 0.4s ease; }
+.option-btn.wrong { background: #fed6e3; color: #880e4f; animation: shake 0.4s ease; }
+@keyframes pop { 50% { transform: scale(1.05); } }
+@keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+.feedback-message { margin-top: 20px; padding: 15px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 16px; opacity: 0; transform: translateY(-10px); transition: all 0.3s; }
+.feedback-message.show { opacity: 1; transform: translateY(0); }
+.feedback-message.success { background: rgba(168, 237, 234, 0.9); color: #006064; }
+.feedback-message.error { background: rgba(254, 214, 227, 0.9); color: #880e4f; }
+
 /* FINAL SCREEN */
-.final-screen {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(255, 255, 255, 0.1);
-backdrop-filter: blur(10px);
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-color: white;
-z-index: 1000;
-opacity: 0;
-pointer-events: none;
-transition: opacity 0.6s ease;
-padding: 40px;
+.final-screen { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px); 
+    display: flex; flex-direction: column; justify-content: center; align-items: center; 
+    color: white; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.6s; padding: 20px; 
 }
-.final-screen.show {
-opacity: 1;
-pointer-events: all;
+.final-screen.show { opacity: 1; pointer-events: all; }
+.final-header { text-align: center; margin-bottom: 20px; animation: slideDown 0.8s ease-out; }
+@keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.final-title { 
+    font-size: 36px; font-weight: 900; margin: 0;
+    background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.3); letter-spacing: 1px;
 }
-.final-title {
-font-size: 56px;
-margin-bottom: 25px;
-text-shadow: 4px 4px 8px rgba(0,0,0,0.3);
-animation: bounce 1.2s ease infinite;
+.before-after-container { 
+    display: flex; gap: 30px; margin: 10px 0 30px 0; align-items: center; flex-wrap: wrap; justify-content: center; 
+    animation: zoomIn 0.8s ease-out 0.2s backwards;
 }
-@keyframes bounce {
-0%, 100% { transform: translateY(0); }
-50% { transform: translateY(-25px); }
+@keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.photo-comparison { text-align: center; position: relative; }
+.photo-label {
+    position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 8px 20px; border-radius: 20px; font-size: 16px; font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); white-space: nowrap; z-index: 10;
+    display: flex; align-items: center; gap: 8px;
 }
-.before-after-container {
-display: flex;
-gap: 30px;
-margin: 30px 0;
-align-items: center;
-flex-wrap: wrap;
-justify-content: center;
+.photo-comparison img { 
+    width: 220px; height: 320px; object-fit: cover; border-radius: 20px; 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5); border: 4px solid white; background: white;
 }
-.photo-comparison {
-text-align: center;
+.transformed-arrow { 
+    display: flex; align-items: center; justify-content: center; 
+    width: 60px; height: 60px; border-radius: 50%; 
+    background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
+    animation: arrowPulse 1.5s ease infinite; position: relative; color: #ff69b4; font-size: 28px; 
 }
-.photo-comparison-label {
-font-size: 24px;
-font-weight: bold;
-margin-bottom: 15px;
-text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+@keyframes arrowPulse { 50% { transform: scale(1.1); } }
+.final-stats-container {
+    background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+    padding: 25px 40px; border-radius: 25px; margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center; animation: slideUp 0.8s ease-out 0.4s backwards; min-width: 300px;
 }
-.photo-comparison img {
-width: 250px;
-height: 350px;
-object-fit: cover;
-border-radius: 20px;
-box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-border: 5px solid white;
+@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.stat-row { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; font-size: 18px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3); padding: 0 10px; }
+.stat-icon { width: 24px; height: 24px; margin-right: 10px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+.stat-value { color: #ffd700; font-weight: 800; font-size: 20px; }
+
+/* HOME BUTTON (Fixed Bottom Right) */
+.home-btn-fixed {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 4000;
+    transition: all 0.3s;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
-.transformed-arrow {
-display: flex;
-align-items: center;
-justify-content: center;
-width: 70px;
-height: 70px;
-border-radius: 50%;
-background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%);
-box-shadow:
-0 6px 0 #5a7080,
-0 10px 20px rgba(111, 141, 157, 0.4),
-inset 0 -3px 8px rgba(0,0,0,0.1);
-animation: arrowPulse 1.5s ease infinite;
-position: relative;
+.home-btn-fixed:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1) rotate(10deg);
 }
-.transformed-arrow::before {
-content: '';
-display: inline-block;
-width: 0;
-height: 0;
-border-left: 12px solid white;
-border-top: 8px solid transparent;
-border-bottom: 8px solid transparent;
-margin-left: -2px;
+.home-btn-fixed svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
-@keyframes arrowPulse {
-0%, 100% { transform: translateX(0) scale(1); opacity: 1; }
-50% { transform: translateX(10px) scale(1.1); opacity: 0.8; }
-}
-.final-stats {
-background: rgba(255,255,255,0.25);
-padding: 30px 60px;
-border-radius: 25px;
-margin: 25px 0;
-backdrop-filter: blur(15px);
-box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-}
-.stat-item {
-font-size: 24px;
-margin: 15px 0;
-font-weight: 600;
-}
-.final-btn {
-padding: 25px 60px;
-font-size: 24px;
-background: linear-gradient(180deg, #9cb9ce 0%, #6f8d9d 100%);
-color: white;
-border: none;
-border-radius: 50px;
-cursor: pointer;
-font-weight: bold;
-box-shadow: 0 8px 0 #5a7080, 0 15px 40px rgba(0,0,0,0.3);
-transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-position: relative;
-top: 0;
-margin-top: 20px;
-}
-.final-btn:hover {
-transform: translateY(-5px) scale(1.05);
-box-shadow: 0 12px 0 #5a7080, 0 20px 50px rgba(0,0,0,0.4);
-}
-.final-btn:active {
-top: 6px;
-box-shadow: 0 2px 0 #5a7080, 0 10px 30px rgba(0,0,0,0.3);
-}
-/* Mouse Trail */
-.mouse-trail-heart {
-position: fixed;
-pointer-events: none;
-z-index: 9999;
-width: 16px;
-height: 16px;
-background: #ff69b4;
-transform: rotate(45deg);
-box-shadow: 0 0 10px #ff69b4, 0 0 20px #ffd700;
-animation: trailFade 1s ease-out forwards;
-}
-.mouse-trail-heart::before, .mouse-trail-heart::after {
-content: '';
-position: absolute;
-width: 16px;
-height: 16px;
-background: #ff69b4;
-border-radius: 50%;
-box-shadow: 0 0 10px #ff69b4, 0 0 20px #ffd700;
-}
-.mouse-trail-heart::before { left: -8px; }
-.mouse-trail-heart::after { top: -8px; }
-.mouse-trail-star {
-position: fixed;
-pointer-events: none;
-z-index: 9999;
-width: 20px;
-height: 20px;
-background: white;
-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-box-shadow: 0 0 10px white, 0 0 20px #ffd700;
-animation: trailFade 1s ease-out forwards;
-}
-@keyframes trailFade {
-0% { opacity: 1; transform: scale(1) rotate(0deg); }
-100% { opacity: 0; transform: scale(0.3) rotate(180deg) translateY(-50px); }
-}
-/* Confetti */
-.confetti {
-position: absolute;
-width: 15px;
-height: 15px;
-top: -20px;
-animation: confettiFall 3s ease-out forwards;
-z-index: 1000;
-}
-@keyframes confettiFall {
-0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-}
-/* Responsive */
-@media (max-width: 1000px) {
-.game-main {
-flex-direction: column;
-}
-.photo-section {
-padding: 30px;
-}
-.steps-panel {
-position: relative;
-left: 0;
-top: 0;
-margin-bottom: 20px;
-}
-.quiz-section {
-width: 100%;
-height: 45%;
-padding: 30px;
-}
-.photo-container {
-height: 400px;
-}
-.before-after-container {
-flex-direction: column;
-}
-.transformed-arrow {
-transform: rotate(90deg) !important;
-}
-.message-plaque {
-right: 20px;
-left: auto;
-top: auto;
-bottom: 20px;
-}
-.salon-title {
-font-size: 48px;
-}
-.salon-subtitle {
-font-size: 24px;
-}
+
+/* Timeout Modal */
+.timeout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); justify-content: center; align-items: center; z-index: 3000; }
+.timeout-content { background: white; padding: 30px; border-radius: 25px; text-align: center; max-width: 400px; width: 90%; animation: popup 0.4s ease; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+@keyframes popup { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.timeout-icon { font-size: 50px; margin-bottom: 15px; }
+.timeout-title { color: #ff6b6b; font-size: 24px; margin-bottom: 10px; font-weight: 800; }
+.timeout-message { color: #555; font-size: 16px; margin-bottom: 20px; line-height: 1.5; white-space: pre-line; }
+.timeout-btn { background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 100%); color: white; border: none; padding: 12px 30px; border-radius: 50px; cursor: pointer; font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 8px; margin: 0 auto; box-shadow: 0 5px 15px rgba(161, 196, 253, 0.4); }
+.timeout-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(161, 196, 253, 0.6); }
+
+/* Effects */
+.sparkle, .heart, .star, .sparkle-particle, .magic-orb { position: absolute; pointer-events: none; }
+.heart { width: 8px; height: 8px; background: #ff69b4; transform: rotate(45deg); box-shadow: 0 0 5px #ff69b4; animation: heartFloat 1.5s ease-out forwards; z-index: 90; }
+.heart::before, .heart::after { content: ''; position: absolute; width: 8px; height: 8px; background: #ff69b4; border-radius: 50%; }
+.heart::before { left: -4px; } .heart::after { top: -4px; }
+@keyframes heartFloat { 0% { opacity: 0; transform: rotate(45deg) scale(0); } 30% { opacity: 1; transform: rotate(45deg) scale(1.2); } 100% { opacity: 0; transform: rotate(45deg) scale(0.3) translateY(-60px); } }
+.sparkle { width: 10px; height: 10px; background: radial-gradient(circle, white 0%, #ffd700 50%, transparent 70%); border-radius: 50%; animation: sparkleFloat 1.2s infinite; z-index: 202; opacity: 0; }
+@keyframes sparkleFloat { 50% { transform: translateY(-10px) scale(1.2); opacity: 1; } }
+.magic-orb { width: 25px; height: 25px; border-radius: 50%; z-index: 100; animation: orbGlow 0.5s infinite alternate; }
+@keyframes orbGlow { from { box-shadow: 0 0 10px currentColor; } to { box-shadow: 0 0 25px currentColor; } }
+.star { width: 10px; height: 10px; background: white; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); box-shadow: 0 0 5px white, 0 0 10px #ffd700; animation: starTwinkle 1.5s forwards; }
+@keyframes starTwinkle { 0% { opacity: 0; transform: scale(0) rotate(0deg); } 30% { opacity: 1; transform: scale(1.3) rotate(90deg); } 100% { opacity: 0; transform: scale(0.3) rotate(360deg) translateY(-60px); } }
+.sparkle-particle { width: 4px; height: 4px; border-radius: 50%; animation: sparkleFly 1s forwards; }
+@keyframes sparkleFly { 0% { opacity: 1; transform: scale(0); } 50% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0; transform: scale(0.2) translate(var(--tx), var(--ty)); } }
+
+.mouse-trail-heart, .mouse-trail-star { position: fixed; pointer-events: none; z-index: 9999; animation: trailFade 0.8s forwards; }
+.mouse-trail-heart { width: 12px; height: 12px; background: #ff69b4; transform: rotate(45deg); box-shadow: 0 0 5px #ff69b4; }
+.mouse-trail-heart::before, .mouse-trail-heart::after { content: ''; position: absolute; width: 12px; height: 12px; background: #ff69b4; border-radius: 50%; }
+.mouse-trail-heart::before { left: -6px; } .mouse-trail-heart::after { top: -6px; }
+.mouse-trail-star { width: 14px; height: 14px; background: white; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); box-shadow: 0 0 5px white, 0 0 10px #ffd700; }
+@keyframes trailFade { 100% { opacity: 0; transform: scale(0.2) rotate(180deg) translateY(-30px); } }
+.confetti { position: absolute; width: 10px; height: 10px; top: -20px; animation: confettiFall 2.5s forwards; z-index: 1000; }
+@keyframes confettiFall { 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+
+@media (max-width: 1000px) { 
+    .game-main { flex-direction: column; } 
+    .photo-section { padding: 20px; } 
+    .steps-panel { position: relative; left: 0; top: 0; margin-bottom: 15px; width: 100%; display: flex; overflow-x: auto; } 
+    .step-item { margin: 0 5px; min-width: 120px; }
+    .quiz-section { width: 100%; height: auto; padding: 20px; } 
+    .photo-container { height: 350px; } 
+    .before-after-container { flex-direction: column; } 
+    .transformed-arrow { transform: rotate(90deg) !important; margin: 10px 0; } 
+    .message-plaque { right: 10px; left: auto; top: auto; bottom: 10px; width: 200px; } 
+    .salon-title { font-size: 42px; } 
+    .levels-container { flex-direction: column; align-items: center; }
+    .level-card { width: 80%; }
+    .final-title { font-size: 28px; }
+    .stat-row { font-size: 16px; }
+    .home-btn-fixed { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+    .home-btn-fixed svg { width: 24px; height: 24px; }
 }
 </style>
 </head>
 <body>
+
 <!-- START SCREEN -->
 <div class="start-screen" id="startScreen">
-<h1 class="salon-title">✨ Beauty Quest ✨</h1>
-<p class="salon-subtitle">Салон Преображений</p>
-<button class="start-btn" onclick="game.startGame()">🎀 Начать игру</button>
-</div>
-<div class="game-container" id="gameContainer">
-<!-- Header -->
-<div class="game-header">
-<div class="header-top">
-<div class="step-indicator">
-<span>✨</span>
-<span>Этап <span id="currentStep">1</span>/<span id="totalSteps">5</span></span>
-</div>
-<div class="controls">
-<select class="control-select" id="difficultySelect">
-<option value="novice">🌸 Новичок</option>
-<option value="pro" selected>💄 Профи</option>
-<option value="master">✨ Мастер</option>
-</select>
-<select class="control-select" id="themeSelect">
-<option value="glamour">🎀 Гламур</option>
-<option value="minimal">⚫ Минимализм</option>
-<option value="vintage">🕰 Винтаж</option>
-</select>
-<!-- ⏱️ КНОПКА ЗАПУСКА ТАЙМЕРА -->
-<button class="timer-btn" id="timerBtn" onclick="game.toggleTimer()">
-<span>⏱️</span>
-<span id="timerBtnText">Запустить таймер</span>
-</button>
-</div>
-</div>
-<!-- 🌈 РАДУЖНЫЙ ТАЙМЕР -->
-<div class="timer-container">
-<div class="timer-bar" id="timerBar"></div>
-</div>
-<div class="timer-text">⏱️ Время на создание образа</div>
-</div>
-<!-- Main Game Area -->
-<div class="game-main">
-<!-- Photo Section -->
-<div class="photo-section">
-<div class="steps-panel">
-<div class="step-item active" data-step="0">
-<img src="https://cdn-icons-png.flaticon.com/512/3408/3408679.png" alt="" class="step-icon">
-<span class="step-text">Начало работы</span>
-</div>
-<div class="step-item" data-step="1">
-<img src="https://cdn-icons-png.flaticon.com/512/4138/4138621.png" alt="" class="step-icon">
-<span class="step-text">Укладка</span>
-</div>
-<div class="step-item" data-step="2">
-<img src="https://cdn-icons-png.flaticon.com/512/4138/4138667.png" alt="" class="step-icon">
-<span class="step-text">Макияж</span>
-</div>
-<div class="step-item" data-step="3">
-<img src="https://cdn-icons-png.flaticon.com/512/8613/8613684.png" alt="" class="step-icon">
-<span class="step-text">Наряд</span>
-</div>
-<div class="step-item" data-step="4">
-<img src="https://cdn-icons-png.flaticon.com/512/2936/2936886.png" alt="" class="step-icon">
-<span class="step-text">Финал</span>
-</div>
-</div>
-<!-- Message Plaque -->
-<div class="message-plaque" id="messagePlaque">
-<div class="close-btn" onclick="game.closeMessage()"></div>
-<div class="message-text" id="messageText"></div>
-</div>
-<div class="photo-container" id="photoContainer">
-<img src="" alt="Client" class="client-photo" id="clientPhoto">
-<div class="magic-container" id="magicContainer"></div>
-</div>
-</div>
-<!-- Quiz Section -->
-<div class="quiz-section">
-<div class="question-card">
-<div class="question-title" id="questionText">Загрузка вопроса...</div>
-<div class="question-hint">Выберите правильный вариант ответа</div>
-</div>
-<div class="options-list" id="optionsList"></div>
-<div class="feedback-message" id="feedbackMessage"></div>
-</div>
-</div>
-<!-- Final Screen -->
-<div class="final-screen" id="finalScreen">
-<h1 class="final-title">🎉 Клиент в восторге!</h1>
-<div class="before-after-container">
-<div class="photo-comparison">
-<div class="photo-comparison-label">✨ Было</div>
-<img src="" alt="Before" id="beforePhoto">
-</div>
-<div class="transformed-arrow"></div>
-<div class="photo-comparison">
-<div class="photo-comparison-label">🌟 Стало</div>
-<img src="" alt="After" id="afterPhoto">
-</div>
-</div>
-<div class="final-stats">
-<div class="stat-item">✨ Вы завершили образ</div>
-<div class="stat-item">📊 Точность: <span id="finalAccuracy">100%</span></div>
-<div class="stat-item">💰 Награда: <span id="finalReward">50</span> монет</div>
-<div class="stat-item">🏆 Уровень: <span id="finalLevel">Мастер</span></div>
-</div>
-<button class="final-btn" onclick="game.restart()">🔄 Новый клиент</button>
-</div>
+    <h1 class="salon-title">✨ Beauty Quest ✨</h1>
+    
+    <div class="levels-container">
+        <div class="level-card" onclick="game.selectLevel('novice')">
+            <span class="level-icon">🌸</span>
+            <div class="level-name">Новичок</div>
+        </div>
+        <div class="level-card" onclick="game.selectLevel('pro')">
+            <span class="level-icon">💃</span>
+            <div class="level-name">Профи</div>
+        </div>
+        <div class="level-card" onclick="game.selectLevel('master')">
+            <span class="level-icon">🕶️</span>
+            <div class="level-name">Мастер</div>
+        </div>
+    </div>
+
+    <div class="bg-selector">
+        <span style="font-size:12px; font-weight:bold; color:white; text-shadow:0 1px 2px rgba(0,0,0,0.5);">Фон:</span>
+        <div class="bg-btn" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);" onclick="game.changeBg('linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)')"></div>
+        <div class="bg-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" onclick="game.changeBg('linear-gradient(135deg, #667eea 0%, #764ba2 100%)')"></div>
+        <div class="bg-btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" onclick="game.changeBg('linear-gradient(135deg, #f093fb 0%, #f5576c 100%)')"></div>
+        <div class="bg-btn" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);" onclick="game.changeBg('linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)')"></div>
+        <label class="file-upload-label" for="bgInput">📷 Своё фото</label>
+        <input type="file" id="bgInput" accept="image/*" onchange="game.uploadBg(this)">
+    </div>
 </div>
 
-<!-- 🚨 МОДАЛЬНОЕ ОКНО ТАЙМЕРА -->
-<div class="timeout-modal" id="timeoutModal">
-<div class="timeout-content">
-<div class="timeout-icon">⌚</div>
-<h2 class="timeout-title">Время вышло!</h2>
-<p class="timeout-message" id="timeoutMessage"></p>
-<button class="timeout-btn" onclick="game.continueFromTimeout()">
-<span>⏸️</span>
-<span>Продолжить</span>
-</button>
+<div class="game-container" id="gameContainer">
+    <!-- КНОПКА ДОМИК (СПРАВА ВНИЗУ) -->
+    <div class="home-btn-fixed" onclick="game.goToStart()" title="В меню">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </div>
+
+    <!-- Header -->
+    <div class="game-header">
+        <div class="header-top">
+            <div class="step-indicator">
+                <span>✨</span>
+                <span>Этап <span id="currentStep">1</span>/<span id="totalSteps">5</span></span>
+            </div>
+            <div class="controls">
+                <button class="timer-btn" id="timerBtn" onclick="game.toggleTimer()">
+                    <span>⏱️</span>
+                    <span id="timerBtnText">Старт</span>
+                </button>
+            </div>
+        </div>
+        <div class="timer-container">
+            <div class="timer-bar" id="timerBar"></div>
+        </div>
+        <div class="timer-text">⏱️ Время на создание образа</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Main Game Area -->
+    <div class="game-main">
+        <div class="photo-section">
+            <div class="steps-panel" id="stepsPanel"></div>
+            <div class="message-plaque" id="messagePlaque">
+                <div class="close-btn" onclick="game.closeMessage()"></div>
+                <div class="message-text" id="messageText"></div>
+            </div>
+            <div class="photo-container" id="photoContainer">
+                <img src="" alt="Client" class="client-photo" id="clientPhoto">
+                <div class="magic-container" id="magicContainer"></div>
+            </div>
+        </div>
+        <div class="quiz-section">
+            <div class="question-card">
+                <div class="question-title" id="questionText">Загрузка...</div>
+                <div class="question-hint">Выбери лучший вариант</div>
+            </div>
+            <div class="options-list" id="optionsList"></div>
+            <div class="feedback-message" id="feedbackMessage"></div>
+        </div>
+    </div>
+
+    <!-- Final Screen -->
+    <div class="final-screen" id="finalScreen">
+        <div class="final-header">
+            <h1 class="final-title">🎉 Клиент в восторге!</h1>
+        </div>
+        <div class="before-after-container">
+            <div class="photo-comparison">
+                <div class="photo-label">
+                    <svg class="stat-icon" viewBox="0 0 24 24" fill="#ffd700"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Было
+                </div>
+                <img src="" id="beforePhoto">
+            </div>
+            <div class="transformed-arrow">➜</div>
+            <div class="photo-comparison">
+                <div class="photo-label">
+                    <svg class="stat-icon" viewBox="0 0 24 24" fill="#ffd700"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    Стало
+                </div>
+                <img src="" id="afterPhoto">
+            </div>
+        </div>
+        <div class="final-stats-container">
+            <div class="stat-row">
+                <span><svg class="stat-icon" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Образ создан!</span>
+            </div>
+            <div class="stat-row">
+                <span><svg class="stat-icon" viewBox="0 0 24 24" fill="#4fc3f7"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14h-2v-4H6v-2h4V7h2v4h4v2h-4v4z"/></svg> Точность:</span>
+                <span class="stat-value" id="finalAccuracy">100%</span>
+            </div>
+            <div class="stat-row">
+                <span><svg class="stat-icon" viewBox="0 0 24 24" fill="#ffd700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg> Награда:</span>
+                <span class="stat-value" id="finalReward">50</span>
+            </div>
+            <div class="stat-row">
+                <span><svg class="stat-icon" viewBox="0 0 24 24" fill="#ffd700"><path d="M20.2 2H3.8C2.8 2 2 2.8 2 3.8V20c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V3.8c0-1-.8-1.8-1.8-1.8zM12 17c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg> Уровень:</span>
+                <span class="stat-value" id="finalLevel" style="color: #ff9a9e;">Мастер</span>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Timeout Modal -->
+<div class="timeout-modal" id="timeoutModal">
+    <div class="timeout-content">
+        <div class="timeout-icon" id="timeoutIcon">⌚</div>
+        <h2 class="timeout-title">Время вышло!</h2>
+        <p class="timeout-message" id="timeoutMessage"></p>
+        <button class="timeout-btn" onclick="game.continueFromTimeout()">
+            <span>⏸️</span>
+            <span>Продолжить</span>
+        </button>
+    </div>
 </div>
 
 <script>
@@ -972,40 +407,79 @@ constructor() {
 this.config = {
 currentStep: 0,
 totalSteps: 5,
-difficulty: 'pro',
-theme: 'glamour',
+difficulty: 'novice',
 correctAnswers: 0,
 totalAnswers: 0,
 gameStarted: false,
 timerRunning: false,
-gameColors: ['#93c5dd', '#c67a8f', '#9cb9ce', '#e6d480', '#ffcc99'],
-photos: [
-"https://polyaalina.github.io/Beauty-Quest/1.jpg",
-"https://polyaalina.github.io/Beauty-Quest/2.jpg",
-"https://polyaalina.github.io/Beauty-Quest/3.jpg",
-"https://polyaalina.github.io/Beauty-Quest/4.jpg",
-"https://polyaalina.github.io/Beauty-Quest/5.jpg"
+gameColors: ['#ff9a9e', '#fecfef', '#a1c4fd', '#c2e9fb', '#f093fb'],
+
+photosNovice: [
+    "https://polyaalina.github.io/Beauty-Quest/15.jpg",
+    "https://polyaalina.github.io/Beauty-Quest/16.jpg",
+    "https://polyaalina.github.io/Beauty-Quest/17.jpg",
+    "https://polyaalina.github.io/Beauty-Quest/18.jpg",
+    "https://polyaalina.github.io/Beauty-Quest/19.jpg"
 ],
-// ✅ ИСПРАВЛЕННЫЕ ФРАЗЫ (11 штук)
-phrases: [
+photosPro: [
+    "https://polyaalina.github.io/Beauty-Quest/50.jpeg",
+    "https://polyaalina.github.io/Beauty-Quest/6.jpeg",
+    "https://polyaalina.github.io/Beauty-Quest/7.jpeg",
+    "https://polyaalina.github.io/Beauty-Quest/8.jpeg",
+    "https://polyaalina.github.io/Beauty-Quest/9.jpeg"
+],
+photosMaster: [
+    "https://polyaalina.github.io/Beauty-Quest/10.jpeg",
+    "https://polyaalina.github.io/Beauty-Quest/11.jpeg",
+    "https://polyaalina.github.io/Beauty-Quest/12.jpeg",
+    "https://polyaalina.github.io/Beauty-Quest/13.jpeg",
+    "https://polyaalina.github.io/Beauty-Quest/14.jpeg"
+],
+
+// ФРАЗЫ ДЛЯ ДЕВУШКИ (НОВИЧОК)
+phrasesGirl: [
 "Вау! Я в восторге! Это именно то, что я хотела!",
 "О боже! Я выгляжу потрясающе!",
 "Это просто магия! Я себя не узнаю!",
 "Как красиво! Я так мечтала об этом!",
 "Ух ты! Теперь я точно королева!",
 "Это волшебно! Спасибо!",
-"Я в шоке! Это лучше, чем я ожидала!", // ✅ Запятая добавлена
+"Я в шоке! Это лучше чем я ожидала!",
 "Какая красота! Хочу смотреться целый день!",
 "О да! Именно так я себя и представляла!",
-"Это чудо! Вы творите волшебство!",
-"Это восхитительно! Теперь я Ваш постоянный клиент!" // ✅ НОВАЯ ФРАЗА
+"Это чудо! Вы творите волшебство!"
 ],
-// ✅ ИСПРАВЛЕННЫЕ СООБЩЕНИЯ ТАЙМЕРА (10 штук)
+// ФРАЗЫ ДЛЯ ВЗРОСЛОЙ ЖЕНЩИНЫ (ПРОФИ)
+phrasesWoman: [
+"Браво! Это именно тот стиль, который я искала!",
+"Выглядит великолепно! Я чувствую себя уверенно.",
+"Просто изумительно! Вы настоящий профессионал.",
+"Какая элегантность! Я в полном восторге.",
+"Именно так я и представляла свой идеальный образ.",
+"Благодарю! Это выше всех похвал.",
+"Потрясающая работа! Я сияю.",
+"Чудесно! Теперь я готова к любому событию.",
+"Это совершенство! Спасибо за ваш талант.",
+"Я выгляжу моложе и красивее. Благодарю!"
+],
+// ФРАЗЫ ДЛЯ ПАРНЯ (МАСТЕР)
+phrasesBoy: [
+"Вау! Я в восторге! Это именно то, что я хотел!",
+"О боже! Я выгляжу круто!",
+"Это просто магия! Я себя не узнаю!",
+"Как стильно! Я так мечтал об этом!",
+"Ух ты! Теперь я точно король!",
+"Это волшебно! Спасибо!",
+"Я в шоке! Это лучше чем я ожидал!",
+"Какой кайф! Хочу ходить так каждый день!",
+"О да! Именно так я себя и представлял!",
+"Это чудо! Вы творите волшебство!"
+],
 timeoutMessages: [
 { icon: '⌚', text: 'Клиент уже считает время...\nУ него есть планы!' },
 { icon: '👀', text: 'Клиент смотрит на часы...\nКогда же уже результат?' },
 { icon: '🙄', text: 'Клиент проверяет время в 10 раз!\nТерпение — главный навык мастера' },
-{ icon: '⏰', text: 'Дедлайн близко! Часики тикают!' }, // ✅ Исправлено
+{ icon: '⏰', text: 'Дедлайн близко! Часики тикают!' },
 { icon: '🍰', text: 'Клиенту нужен кофе и десерт!\nСначала еда, потом красота' },
 { icon: '🍔', text: 'Голодный клиент ждёт обед!' },
 { icon: '🥪', text: 'Салон закрылся... на перекус!\nГолод сильнее красоты' },
@@ -1013,53 +487,61 @@ timeoutMessages: [
 { icon: '😡', text: 'Серьёзный клиент недоволен!\nБыстро меняем имидж!' },
 { icon: '😴', text: 'Клиент уснул.\nНакройте его пледиком' }
 ],
-questions: [
-{
-text: "Какую причёску сделать клиентке?",
-hint: "Элегантная укладка для особого случая",
-options: [
-{ text: "Распущенные волосы", icon: "💁‍♀️", correct: false, photoIndex: 0 },
-{ text: "Элегантная укладка", icon: "💇‍♀️", correct: true, photoIndex: 1 },
-{ text: "Конский хвост", icon: "🎀", correct: false, photoIndex: 0 }
-],
-correctPhotoIndex: 1
-},
-{
-text: "Какой макияж выбрать?",
-hint: "Яркий вечерний макияж",
-options: [
-{ text: "Натуральный", icon: "🌸", correct: false, photoIndex: 1 },
-{ text: "Яркая помада", icon: "💋", correct: true, photoIndex: 2 },
-{ text: "Блеск для губ", icon: "✨", correct: false, photoIndex: 1 }
-],
-correctPhotoIndex: 2
-},
-{
-text: "Какое платье надеть?",
-hint: "Элегантное вечернее",
-options: [
-{ text: "Повседневное", icon: "👚", correct: false, photoIndex: 2 },
-{ text: "Вечернее платье", icon: "👗", correct: true, photoIndex: 3 },
-{ text: "Спортивное", icon: "👟", correct: false, photoIndex: 2 }
-],
-correctPhotoIndex: 3
-},
-{
-text: "Какие украшения добавить?",
-hint: "Роскошные украшения",
-options: [
-{ text: "Без украшений", icon: "❌", correct: false, photoIndex: 3 },
-{ text: "Колье и серьги", icon: "💎", correct: true, photoIndex: 4 },
-{ text: "Только браслет", icon: "⌚", correct: false, photoIndex: 3 }
-],
-correctPhotoIndex: 4
+
+levelsConfig: {
+    novice: {
+        steps: [
+            { text: "Начало работы", icon: "https://cdn-icons-png.flaticon.com/512/3408/3408679.png" },
+            { text: "Укладка", icon: "https://cdn-icons-png.flaticon.com/512/4138/4138621.png" },
+            { text: "Макияж", icon: "https://cdn-icons-png.flaticon.com/512/4138/4138667.png" },
+            { text: "Наряд", icon: "https://cdn-icons-png.flaticon.com/512/8613/8613684.png" },
+            { text: "Финал", icon: "https://cdn-icons-png.flaticon.com/512/2936/2936886.png" }
+        ],
+        questions: [
+            { text: "Какую причёску сделать?", hint: "Нежная укладка", options: [{ text: "Распущенные", icon: "💁‍♀️", correct: false, photoIndex: 0 }, { text: "Локоны", icon: "💇‍♀️", correct: true, photoIndex: 1 }, { text: "Хвост", icon: "🎀", correct: false, photoIndex: 0 }], correctPhotoIndex: 1 },
+            { text: "Какой макияж?", hint: "Лёгкий и свежий", options: [{ text: "Яркий", icon: "🎭", correct: false, photoIndex: 1 }, { text: "Нежный", icon: "🌸", correct: true, photoIndex: 2 }, { text: "Без макияжа", icon: "🧖‍♀️", correct: false, photoIndex: 1 }], correctPhotoIndex: 2 },
+            { text: "Какое платье?", hint: "Для праздника", options: [{ text: "Повседневное", icon: "👚", correct: false, photoIndex: 2 }, { text: "Праздничное", icon: "👗", correct: true, photoIndex: 3 }, { text: "Спортивное", icon: "👟", correct: false, photoIndex: 2 }], correctPhotoIndex: 3 },
+            { text: "Украшения?", hint: "Что-то изящное", options: [{ text: "Ничего", icon: "❌", correct: false, photoIndex: 3 }, { text: "Серьги и бусы", icon: "💎", correct: true, photoIndex: 4 }, { text: "Часы", icon: "⌚", correct: false, photoIndex: 3 }], correctPhotoIndex: 4 }
+        ]
+    },
+    pro: {
+        steps: [
+            { text: "Консультация", icon: "https://cdn-icons-png.flaticon.com/512/3408/3408679.png" },
+            { text: "Элегантная укладка", icon: "https://cdn-icons-png.flaticon.com/512/4138/4138621.png" },
+            { text: "Вечерний макияж", icon: "https://cdn-icons-png.flaticon.com/512/4138/4138667.png" },
+            { text: "Изысканный наряд", icon: "https://cdn-icons-png.flaticon.com/512/8613/8613684.png" },
+            { text: "Результат", icon: "https://cdn-icons-png.flaticon.com/512/2936/2936886.png" }
+        ],
+        questions: [
+            { text: "Причёска для вечера?", hint: "Строго и шикарно", options: [{ text: "Коса", icon: "🧶", correct: false, photoIndex: 0 }, { text: "Высокий пучок", icon: "💇‍♀️", correct: true, photoIndex: 1 }, { text: "Хвост", icon: "🍩", correct: false, photoIndex: 0 }], correctPhotoIndex: 1 },
+            { text: "Оттенок помады?", hint: "Глубокий красный", options: [{ text: "Блеск", icon: "✨", correct: false, photoIndex: 1 }, { text: "Матовая классика", icon: "💋", correct: true, photoIndex: 2 }, { text: "Нюд", icon: "🍑", correct: false, photoIndex: 1 }], correctPhotoIndex: 2 },
+            { text: "Аксессуар?", hint: "Драгоценности", options: [{ text: "Сумка", icon: "🎒", correct: false, photoIndex: 2 }, { text: "Колье", icon: "📿", correct: true, photoIndex: 3 }, { text: "Шляпка", icon: "🧢", correct: false, photoIndex: 2 }], correctPhotoIndex: 3 },
+            { text: "Парфюм?", hint: "Шлейфовый аромат", options: [{ text: "Без духов", icon: "🚫", correct: false, photoIndex: 3 }, { text: "Цветочные ноты", icon: "🌺", correct: true, photoIndex: 4 }, { text: "Свежесть", icon: "🍋", correct: false, photoIndex: 3 }], correctPhotoIndex: 4 }
+        ]
+    },
+    master: {
+        steps: [
+            { text: "Знакомство", icon: "https://cdn-icons-png.flaticon.com/512/3408/3408679.png" },
+            { text: "Крутая стрижка", icon: "https://cdn-icons-png.flaticon.com/512/4138/4138621.png" },
+            { text: "Стиль", icon: "https://cdn-icons-png.flaticon.com/512/2913/2913525.png" },
+            { text: "Прикид", icon: "https://cdn-icons-png.flaticon.com/512/8613/8613684.png" },
+            { text: "Результат", icon: "https://cdn-icons-png.flaticon.com/512/2936/2936886.png" }
+        ],
+        questions: [
+            { text: "Какую стрижку сделаем?", hint: "Что-то современное", options: [{ text: "Под ноль", icon: "🪒", correct: false, photoIndex: 0 }, { text: "Стильная модельная", icon: "💇‍♂️", correct: true, photoIndex: 1 }, { text: "Длинная", icon: "🦁", correct: false, photoIndex: 0 }], correctPhotoIndex: 1 },
+            { text: "Что добавим в образ?", hint: "Для крутости", options: [{ text: "Бант", icon: "🎀", correct: false, photoIndex: 1 }, { text: "Крутые очки", icon: "🕶️", correct: true, photoIndex: 2 }, { text: "Цветы", icon: "🌻", correct: false, photoIndex: 1 }], correctPhotoIndex: 2 },
+            { text: "Одежда?", hint: "Удобно и модно", options: [{ text: "Пиджак", icon: "🤵", correct: false, photoIndex: 2 }, { text: "Худи и джинсы", icon: "👕", correct: true, photoIndex: 3 }, { text: "Пальто", icon: "🧥", correct: false, photoIndex: 2 }], correctPhotoIndex: 3 },
+            { text: "Обувь?", hint: "Для прогулок", options: [{ text: "Туфли", icon: "👞", correct: false, photoIndex: 3 }, { text: "Кроссовки", icon: "👟", correct: true, photoIndex: 4 }, { text: "Сапоги", icon: "👢", correct: false, photoIndex: 3 }], correctPhotoIndex: 4 }
+        ]
+    }
 }
-]
 };
+
 this.ui = {
 startScreen: document.getElementById('startScreen'),
 currentStep: document.getElementById('currentStep'),
 totalSteps: document.getElementById('totalSteps'),
+progressBar: document.getElementById('progressBar'),
 questionText: document.getElementById('questionText'),
 optionsList: document.getElementById('optionsList'),
 feedbackMessage: document.getElementById('feedbackMessage'),
@@ -1071,263 +553,222 @@ photoContainer: document.getElementById('photoContainer'),
 magicContainer: document.getElementById('magicContainer'),
 messagePlaque: document.getElementById('messagePlaque'),
 messageText: document.getElementById('messageText'),
-difficultySelect: document.getElementById('difficultySelect'),
-themeSelect: document.getElementById('themeSelect'),
-gameContainer: document.getElementById('gameContainer'),
 timerBar: document.getElementById('timerBar'),
 timeoutModal: document.getElementById('timeoutModal'),
+timeoutIcon: document.getElementById('timeoutIcon'),
 timeoutMessage: document.getElementById('timeoutMessage'),
 timerBtn: document.getElementById('timerBtn'),
-timerBtnText: document.getElementById('timerBtnText')
+timerBtnText: document.getElementById('timerBtnText'),
+finalLevel: document.getElementById('finalLevel'),
+finalAccuracy: document.getElementById('finalAccuracy'),
+finalReward: document.getElementById('finalReward'),
+stepsPanel: document.getElementById('stepsPanel')
 };
+
 this.timerInterval = null;
 this.TIMER_DURATION = 30000;
 this.init();
 }
+
 init() {
 this.ui.totalSteps.textContent = this.config.totalSteps;
-this.ui.difficultySelect.addEventListener('change', (e) => {
-this.config.difficulty = e.target.value;
-});
-this.ui.themeSelect.addEventListener('change', (e) => {
-this.config.theme = e.target.value;
-});
 this.initMouseTrail();
 }
+
+selectLevel(level) {
+this.config.difficulty = level;
+this.startGame();
+}
+
 startGame() {
 this.config.gameStarted = true;
 this.config.timerRunning = false;
 this.ui.startScreen.classList.add('hidden');
+
+const levelData = this.config.levelsConfig[this.config.difficulty];
+
+this.ui.stepsPanel.innerHTML = '';
+levelData.steps.forEach((step, index) => {
+    const div = document.createElement('div');
+    div.className = `step-item ${index === 0 ? 'active' : ''}`;
+    div.dataset.step = index;
+    div.innerHTML = `<img src="${step.icon}" class="step-icon"><span>${step.text}</span>`;
+    this.ui.stepsPanel.appendChild(div);
+});
+
+if (this.config.difficulty === 'pro') this.config.photos = this.config.photosPro;
+else if (this.config.difficulty === 'master') this.config.photos = this.config.photosMaster;
+else this.config.photos = this.config.photosNovice;
+
+this.config.questions = levelData.questions;
+
+// Сбрасываем доступные фразы при старте, чтобы ничего не осталось
+this.config.availablePhrases = [];
+
 this.ui.clientPhoto.src = this.config.photos[0];
 this.ui.timerBar.style.animation = 'none';
 this.ui.timerBar.offsetHeight;
 this.loadQuestion();
 }
 
-// ⏱️ ФУНКЦИИ ТАЙМЕРА
-toggleTimer() {
-    if (this.config.timerRunning) {
-        this.stopTimer();
-    } else {
-        this.startTimer();
-    }
+changeBg(bgStyle) {
+document.body.style.background = bgStyle;
+document.body.style.backgroundSize = 'cover';
+document.body.style.backgroundPosition = 'center';
+}
+uploadBg(input) {
+if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        document.body.style.background = `url(${e.target.result})`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+    };
+    reader.readAsDataURL(input.files[0]);
+}
 }
 
+toggleTimer() {
+    if (this.config.timerRunning) { this.stopTimer(); } else { this.startTimer(); }
+}
 startTimer() {
     if (this.config.timerRunning) return;
-    
     this.config.timerRunning = true;
     this.ui.timerBtn.classList.add('running');
-    this.ui.timerBtnText.textContent = 'Остановить таймер';
-    
+    this.ui.timerBtnText.textContent = 'Стоп';
     const timerBar = this.ui.timerBar;
     timerBar.style.animation = 'none';
     timerBar.offsetHeight;
     timerBar.style.animation = 'rainbow-move 2s linear infinite, timer-shrink 30s linear forwards';
-    
     this.timerInterval = setTimeout(() => {
-        if (this.config.gameStarted && this.config.timerRunning) {
-            this.showTimeoutModal();
-        }
+        if (this.config.gameStarted && this.config.timerRunning) { this.showTimeoutModal(); }
     }, this.TIMER_DURATION);
 }
-
 stopTimer() {
     this.config.timerRunning = false;
     clearInterval(this.timerInterval);
     this.ui.timerBar.style.animation = 'none';
     this.ui.timerBtn.classList.remove('running');
-    this.ui.timerBtnText.textContent = 'Запустить таймер';
+    this.ui.timerBtnText.textContent = 'Старт';
 }
-
 showTimeoutModal() {
     this.config.timerRunning = false;
     this.stopTimer();
-    
     const randomMsg = this.config.timeoutMessages[Math.floor(Math.random() * this.config.timeoutMessages.length)];
-    
+    this.ui.timeoutIcon.textContent = randomMsg.icon;
     this.ui.timeoutMessage.textContent = randomMsg.text;
     this.ui.timeoutModal.style.display = 'flex';
 }
-
 continueFromTimeout() {
     this.ui.timeoutModal.style.display = 'none';
     this.config.timerRunning = false;
-    this.ui.timerBtnText.textContent = 'Запустить таймер';
+    this.ui.timerBtnText.textContent = 'Старт';
 }
 
 initMouseTrail() {
 let lastTrailTime = 0;
-const trailColors = ['#ff69b4', '#ffffff'];
 document.addEventListener('mousemove', (e) => {
 const currentTime = Date.now();
-if (currentTime - lastTrailTime > 100) {
-lastTrailTime = currentTime;
-const type = Math.random() > 0.5 ? 'heart' : 'star';
-const trail = document.createElement('div');
-if (type === 'heart') {
-trail.className = 'mouse-trail-heart';
-trail.style.background = trailColors[0];
-trail.style.boxShadow = `0 0 10px ${trailColors[0]}, 0 0 20px #ffd700`;
-} else {
-trail.className = 'mouse-trail-star';
-}
-trail.style.left = (e.clientX - 8) + 'px';
-trail.style.top = (e.clientY - 8) + 'px';
-document.body.appendChild(trail);
-setTimeout(() => trail.remove(), 1000);
+if (currentTime - lastTrailTime > 40) { 
+    lastTrailTime = currentTime;
+    const type = Math.random() > 0.5 ? 'heart' : 'star';
+    const trail = document.createElement('div');
+    if (type === 'heart') { trail.className = 'mouse-trail-heart'; } 
+    else { trail.className = 'mouse-trail-star'; }
+    trail.style.left = (e.clientX - 6) + 'px'; 
+    trail.style.top = (e.clientY - 6) + 'px';
+    document.body.appendChild(trail);
+    setTimeout(() => trail.remove(), 800);
 }
 });
 }
+
 createMagicOrb() {
-const container = this.ui.magicContainer;
-container.innerHTML = '';
-const orb = document.createElement('div');
-orb.className = 'magic-orb';
-container.appendChild(orb);
-const duration = 2500;
-const startTime = Date.now();
-const centerX = container.offsetWidth / 2;
-const centerY = container.offsetHeight / 2 + 20;
-const scale = 100;
+const container = this.ui.magicContainer; container.innerHTML = '';
+const orb = document.createElement('div'); orb.className = 'magic-orb'; container.appendChild(orb);
+const duration = 2000, startTime = Date.now();
+const centerX = container.offsetWidth / 2, centerY = container.offsetHeight / 2 + 20, scale = 80;
 let colorIndex = 0;
 const animateOrb = () => {
-const elapsed = Date.now() - startTime;
-const progress = elapsed / duration;
+const elapsed = Date.now() - startTime, progress = elapsed / duration;
 if (progress < 1) {
-const t = progress * Math.PI * 2;
-const heartX = 16 * Math.pow(Math.sin(t), 3);
-const heartY = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
-const x = centerX + heartX * (scale / 16) - 17.5;
-const y = centerY + heartY * (scale / 16) - 17.5;
-orb.style.left = x + 'px';
-orb.style.top = y + 'px';
-const colorProgress = progress * this.config.gameColors.length;
-colorIndex = Math.floor(colorProgress);
-const nextColorIndex = (colorIndex + 1) % this.config.gameColors.length;
-const currentColor = this.config.gameColors[colorIndex % this.config.gameColors.length];
-orb.style.background = `radial-gradient(circle at 30% 30%,
-${this.lightenColor(currentColor, 20)},
-${currentColor},
-${this.config.gameColors[nextColorIndex]})`;
-orb.style.color = currentColor;
-if (elapsed % 120 < 50) {
-this.createTrail(x + 17.5, y + 17.5, container, currentColor);
-}
-requestAnimationFrame(animateOrb);
-} else {
-orb.remove();
-}
+    const t = progress * Math.PI * 2;
+    const heartX = 16 * Math.pow(Math.sin(t), 3);
+    const heartY = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+    const x = centerX + heartX * (scale / 16) - 12.5, y = centerY + heartY * (scale / 16) - 12.5;
+    orb.style.left = x + 'px'; orb.style.top = y + 'px';
+    const colorProgress = progress * this.config.gameColors.length;
+    colorIndex = Math.floor(colorProgress);
+    const nextColorIndex = (colorIndex + 1) % this.config.gameColors.length;
+    const currentColor = this.config.gameColors[colorIndex % this.config.gameColors.length];
+    orb.style.background = `radial-gradient(circle at 30% 30%, ${this.lightenColor(currentColor, 20)}, ${currentColor}, ${this.config.gameColors[nextColorIndex]})`;
+    orb.style.color = currentColor;
+    if (elapsed % 100 < 40) { this.createTrail(x + 12.5, y + 12.5, container, currentColor); }
+    requestAnimationFrame(animateOrb);
+} else { orb.remove(); }
 };
 animateOrb();
 }
 createTrail(x, y, container, color) {
-const heart = document.createElement('div');
-heart.className = 'heart';
-heart.style.background = color;
-heart.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
-heart.style.left = x + 'px';
-heart.style.top = y + 'px';
-container.appendChild(heart);
-const star = document.createElement('div');
-star.className = 'star';
-star.style.boxShadow = `0 0 10px white, 0 0 20px ${color}`;
-star.style.left = (x - 15) + 'px';
-star.style.top = (y - 15) + 'px';
-container.appendChild(star);
-for (let i = 0; i < 4; i++) {
+const heart = document.createElement('div'); heart.className = 'heart'; heart.style.background = color; heart.style.boxShadow = `0 0 5px ${color}`; heart.style.left = x + 'px'; heart.style.top = y + 'px'; container.appendChild(heart);
+const star = document.createElement('div'); star.className = 'star'; star.style.boxShadow = `0 0 5px white`; star.style.left = (x - 10) + 'px'; star.style.top = (y - 10) + 'px'; container.appendChild(star);
+for (let i = 0; i < 3; i++) {
 setTimeout(() => {
-const sparkle = document.createElement('div');
-sparkle.className = 'sparkle-particle';
-const angle = (Math.random() * Math.PI * 2);
-const dist = 20 + Math.random() * 40;
-sparkle.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
-sparkle.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
-sparkle.style.background = `radial-gradient(circle, white 0%, ${color} 50%, transparent 70%)`;
-sparkle.style.left = x + 'px';
-sparkle.style.top = y + 'px';
-container.appendChild(sparkle);
-setTimeout(() => sparkle.remove(), 1200);
-}, i * 100);
+    const sparkle = document.createElement('div'); sparkle.className = 'sparkle-particle';
+    const angle = (Math.random() * Math.PI * 2), dist = 15 + Math.random() * 30;
+    sparkle.style.setProperty('--tx', Math.cos(angle) * dist + 'px'); sparkle.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+    sparkle.style.background = `radial-gradient(circle, white 0%, ${color} 50%, transparent 70%)`;
+    sparkle.style.left = x + 'px'; sparkle.style.top = y + 'px'; container.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 1000);
+}, i * 80);
 }
-setTimeout(() => {
-if (heart.parentNode) heart.remove();
-if (star.parentNode) star.remove();
-}, 1800);
+setTimeout(() => { if (heart.parentNode) heart.remove(); if (star.parentNode) star.remove(); }, 1500);
 }
 lightenColor(color, percent) {
-const num = parseInt(color.replace('#', ''), 16);
-const amt = Math.round(2.55 * percent);
-const R = (num >> 16) + amt;
-const G = (num >> 8 & 0x00FF) + amt;
-const B = (num & 0x0000FF) + amt;
-return '#' + (0x1000000 +
-(R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
-(G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
-(B < 255 ? B < 1 ? 0 : B : 255)
-).toString(16).slice(1);
+const num = parseInt(color.replace('#', ''), 16), amt = Math.round(2.55 * percent);
+const R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
 }
-shuffleArray(array) {
-const shuffled = [...array];
-for (let i = shuffled.length - 1; i > 0; i--) {
-const j = Math.floor(Math.random() * (i + 1));
-[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-}
-return shuffled;
-}
+shuffleArray(array) { const shuffled = [...array]; for (let i = shuffled.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } return shuffled; }
+
 loadQuestion() {
-if (this.config.currentStep >= this.config.questions.length) {
-this.finishGame();
-return;
-}
+if (this.config.currentStep >= this.config.questions.length) { this.finishGame(); return; }
 const question = this.config.questions[this.config.currentStep];
 this.ui.currentStep.textContent = this.config.currentStep + 1;
+const progress = ((this.config.currentStep) / this.config.totalSteps) * 100;
+this.ui.progressBar.style.width = progress + '%';
 this.ui.questionText.textContent = question.text;
 this.ui.optionsList.innerHTML = '';
 const shuffledOptions = this.shuffleArray(question.options);
-shuffledOptions.forEach((option, index) => {
-const btn = document.createElement('button');
-btn.className = 'option-btn';
-btn.innerHTML = `<span style="font-size: 32px">${option.icon}</span> <span>${option.text}</span>`;
+shuffledOptions.forEach((option) => {
+const btn = document.createElement('button'); btn.className = 'option-btn';
+btn.innerHTML = `<span style="font-size: 24px">${option.icon}</span> <span>${option.text}</span>`;
 btn.onclick = () => this.checkAnswer(option.correct, btn, option.photoIndex);
 this.ui.optionsList.appendChild(btn);
 });
 document.querySelectorAll('.step-item').forEach((item, index) => {
 item.classList.remove('active', 'completed');
-if (index < this.config.currentStep) {
-item.classList.add('completed');
-} else if (index === this.config.currentStep) {
-item.classList.add('active');
-}
+if (index < this.config.currentStep) item.classList.add('completed');
+else if (index === this.config.currentStep) item.classList.add('active');
 });
-this.ui.feedbackMessage.className = 'feedback-message';
-this.ui.feedbackMessage.textContent = '';
+this.ui.feedbackMessage.className = 'feedback-message'; this.ui.feedbackMessage.textContent = '';
 }
+
 checkAnswer(isCorrect, btnElement, photoIndex) {
 this.config.totalAnswers++;
 const buttons = this.ui.optionsList.querySelectorAll('.option-btn');
 buttons.forEach(btn => btn.disabled = true);
 if (isCorrect) {
-this.config.correctAnswers++;
-btnElement.classList.add('correct');
-this.showFeedback('Применяем преображение... ✨', 'success');
-setTimeout(() => {
-this.applyTransformation(photoIndex);
-}, 1000);
+this.config.correctAnswers++; btnElement.classList.add('correct');
+this.showFeedback('Преображаем! ✨', 'success');
+setTimeout(() => { this.applyTransformation(photoIndex); }, 800);
 } else {
-btnElement.classList.add('wrong');
-this.showFeedback('Попробуйте ещё раз! 💪', 'error');
-setTimeout(() => {
-btnElement.classList.remove('wrong');
-buttons.forEach(btn => btn.disabled = false);
-this.ui.feedbackMessage.classList.remove('show');
-}, 1500);
+btnElement.classList.add('wrong'); this.showFeedback('Попробуй ещё раз! 💪', 'error');
+setTimeout(() => { btnElement.classList.remove('wrong'); buttons.forEach(btn => btn.disabled = false); this.ui.feedbackMessage.classList.remove('show'); }, 1200);
 }
 }
-showFeedback(text, type) {
-this.ui.feedbackMessage.textContent = text;
-this.ui.feedbackMessage.className = `feedback-message show ${type}`;
-}
+showFeedback(text, type) { this.ui.feedbackMessage.textContent = text; this.ui.feedbackMessage.className = `feedback-message show ${type}`; }
+
 applyTransformation(photoIndex) {
 this.createMagicOrb();
 this.ui.photoContainer.classList.add('transitioning');
@@ -1335,99 +776,95 @@ this.ui.clientPhoto.classList.add('fade-out');
 setTimeout(() => {
 this.ui.clientPhoto.src = this.config.photos[photoIndex];
 this.ui.clientPhoto.onload = () => {
-this.ui.clientPhoto.classList.remove('fade-out');
-this.ui.photoContainer.classList.remove('transitioning');
-if (photoIndex > 0 && photoIndex <= 4) {
-this.showMessage();
-}
+    this.ui.clientPhoto.classList.remove('fade-out');
+    this.ui.photoContainer.classList.remove('transitioning');
+    
+    // ✅ ЖЕСТКАЯ ПРОВЕРКА: Плашка появляется ТОЛЬКО если photoIndex > 0
+    // Это гарантирует, что на первом слайде (индекс 0) она никогда не появится.
+    if (photoIndex > 0 && photoIndex <= 4) { 
+        this.showMessage(); 
+    }
 };
-}, 1250);
-setTimeout(() => {
-this.config.currentStep++;
-this.loadQuestion();
-}, 2500);
+}, 1000);
+setTimeout(() => { this.config.currentStep++; this.loadQuestion(); }, 2000);
 }
+
 showMessage() {
-if (!this.config.availablePhrases || this.config.availablePhrases.length === 0) {
-this.config.availablePhrases = this.shuffleArray(this.config.phrases);
+// Выбор фраз в зависимости от уровня
+let phraseList;
+if (this.config.difficulty === 'master') {
+    phraseList = this.config.phrasesBoy; // Парень
+} else if (this.config.difficulty === 'pro') {
+    phraseList = this.config.phrasesWoman; // Женщина
+} else {
+    phraseList = this.config.phrasesGirl; // Девушка
+}
+
+if (!this.config.availablePhrases || this.config.availablePhrases.length === 0) { 
+    this.config.availablePhrases = this.shuffleArray(phraseList); 
 }
 const randomIndex = Math.floor(Math.random() * this.config.availablePhrases.length);
 const chosenPhrase = this.config.availablePhrases[randomIndex];
 this.config.availablePhrases.splice(randomIndex, 1);
-if (this.config.availablePhrases.length < 2) {
-this.config.availablePhrases = this.shuffleArray(this.config.phrases);
-}
+if (this.config.availablePhrases.length < 2) { this.config.availablePhrases = this.shuffleArray(phraseList); }
+
 this.ui.messageText.textContent = chosenPhrase;
 this.ui.messagePlaque.classList.add('show');
 this.createSparklesAroundMessage();
 }
-closeMessage() {
-this.ui.messagePlaque.classList.remove('show');
-}
+closeMessage() { this.ui.messagePlaque.classList.remove('show'); }
 createSparklesAroundMessage() {
 const container = document.querySelector('.photo-container');
-for (let i = 0; i < 6; i++) {
+for (let i = 0; i < 5; i++) {
 setTimeout(() => {
-const sparkle = document.createElement('div');
-sparkle.className = 'sparkle';
-sparkle.style.left = (80 + (Math.random() * 40)) + '%';
-sparkle.style.top = (45 + (Math.random() * 20)) + '%';
-sparkle.style.opacity = '0';
-container.appendChild(sparkle);
-setTimeout(() => sparkle.remove(), 1500);
-}, i * 100);
+    const sparkle = document.createElement('div'); sparkle.className = 'sparkle';
+    sparkle.style.left = (80 + (Math.random() * 40)) + '%'; sparkle.style.top = (45 + (Math.random() * 20)) + '%';
+    container.appendChild(sparkle); setTimeout(() => sparkle.remove(), 1200);
+}, i * 80);
 }
 }
+
 finishGame() {
 this.stopTimer();
 const accuracy = Math.round((this.config.correctAnswers / this.config.totalAnswers) * 100);
 const reward = this.config.correctAnswers * 10;
 this.ui.beforePhoto.src = this.config.photos[0];
 this.ui.afterPhoto.src = this.config.photos[4];
-document.getElementById('finalAccuracy').textContent = accuracy + '%';
-document.getElementById('finalReward').textContent = reward;
-let level = 'Новичок';
-if (accuracy >= 80) level = 'Профи';
-if (accuracy === 100) level = 'Мастер';
-document.getElementById('finalLevel').textContent = level;
+this.ui.finalAccuracy.textContent = accuracy + '%';
+this.ui.finalReward.textContent = reward;
+
+let levelName = 'Новичок';
+if (this.config.difficulty === 'pro') levelName = 'Профи';
+if (this.config.difficulty === 'master') levelName = 'Мастер';
+this.ui.finalLevel.textContent = levelName;
+
+this.ui.progressBar.style.width = '100%';
 this.createConfetti();
-setTimeout(() => {
-this.ui.finalScreen.classList.add('show');
-}, 500);
+setTimeout(() => { this.ui.finalScreen.classList.add('show'); }, 400);
 }
 createConfetti() {
-const colors = ['#93c5dd', '#c67a8f', '#9cb9ce', '#e6d480', '#ffcc99'];
-for (let i = 0; i < 50; i++) {
+const colors = ['#ff9a9e', '#fecfef', '#a1c4fd', '#c2e9fb', '#f093fb'];
+for (let i = 0; i < 40; i++) {
 setTimeout(() => {
-const confetti = document.createElement('div');
-confetti.className = 'confetti';
-confetti.style.left = Math.random() * 100 + '%';
-confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-document.body.appendChild(confetti);
-setTimeout(() => confetti.remove(), 4000);
-}, i * 50);
+    const confetti = document.createElement('div'); confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + '%'; confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0'; confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    document.body.appendChild(confetti); setTimeout(() => confetti.remove(), 2500);
+}, i * 40);
 }
 }
-restart() {
-this.stopTimer();
+
+goToStart() {
+this.ui.finalScreen.classList.remove('show');
+this.ui.startScreen.classList.remove('hidden');
 this.config.currentStep = 0;
 this.config.correctAnswers = 0;
 this.config.totalAnswers = 0;
-this.config.gameStarted = true;
-this.config.timerRunning = false;
-this.ui.clientPhoto.classList.add('fade-out');
-setTimeout(() => {
-this.ui.clientPhoto.src = this.config.photos[0];
-this.ui.clientPhoto.classList.remove('fade-out');
-}, 600);
-this.closeMessage();
-this.ui.finalScreen.classList.remove('show');
-this.ui.timeoutModal.style.display = 'none';
-this.loadQuestion();
+this.config.gameStarted = false;
+this.stopTimer();
 }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
 window.game = new BeautyQuestGame();
 });
