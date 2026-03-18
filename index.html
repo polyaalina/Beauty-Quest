@@ -27,6 +27,7 @@ box-shadow: 0 20px 60px rgba(0,0,0,0.2); overflow: hidden;
 display: flex; flex-direction: column; position: relative;
 backdrop-filter: blur(5px);
 }
+/* START SCREEN */
 .start-screen {
 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
 background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
@@ -61,6 +62,7 @@ color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 .file-upload-label:hover { background: rgba(255,255,255,0.6); }
 #bgInput { display: none; }
+/* GAME HEADER */
 .game-header {
 background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
 padding: 15px 30px; color: white; border-bottom: 1px solid rgba(255,255,255,0.2);
@@ -79,6 +81,7 @@ padding: 15px 30px; color: white; border-bottom: 1px solid rgba(255,255,255,0.2)
 .timer-text { font-size: 12px; text-align: center; margin-top: 4px; opacity: 0.9; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
 .progress-container { background: rgba(255,255,255,0.3); height: 10px; border-radius: 5px; overflow: hidden; margin-top: 10px; }
 .progress-bar { height: 100%; background: linear-gradient(90deg, #fff 0%, #ffcc99 100%); width: 0%; transition: width 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); border-radius: 5px; box-shadow: 0 0 10px rgba(255,255,255,0.6); }
+/* MAIN GAME AREA */
 .game-main { flex: 1; display: flex; overflow: hidden; position: relative; }
 .photo-section { flex: 1; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; padding: 20px 20px 20px 280px; position: relative; }
 .photo-container { 
@@ -223,6 +226,7 @@ padding: 15px 30px; color: white; border-bottom: 1px solid rgba(255,255,255,0.2)
 .feedback-message.show { opacity: 1; transform: translateY(0); }
 .feedback-message.success { background: rgba(168, 237, 234, 0.9); color: #006064; }
 .feedback-message.error { background: rgba(254, 214, 227, 0.9); color: #880e4f; }
+/* FINAL SCREEN */
 .final-screen {
 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
 background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px);
@@ -272,6 +276,7 @@ text-align: center; animation: slideUp 0.8s ease-out 0.4s backwards; min-width: 
 .stat-row { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; font-size: 18px; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3); padding: 0 10px; }
 .stat-icon { width: 24px; height: 24px; margin-right: 10px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
 .stat-value { color: #ffd700; font-weight: 800; font-size: 20px; }
+/* HOME BUTTON (Fixed Bottom Right) */
 .home-btn-fixed {
 position: fixed;
 bottom: 30px;
@@ -300,6 +305,7 @@ height: 32px;
 fill: white;
 filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
+/* Timeout Modal */
 .timeout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); justify-content: center; align-items: center; z-index: 3000; }
 .timeout-content { background: white; padding: 30px; border-radius: 25px; text-align: center; max-width: 400px; width: 90%; animation: popup 0.4s ease; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
 @keyframes popup { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -308,11 +314,10 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 .timeout-message { color: #555; font-size: 16px; margin-bottom: 20px; line-height: 1.5; white-space: pre-line; }
 .timeout-btn { background: linear-gradient(180deg, #a1c4fd 0%, #c2e9fb 100%); color: white; border: none; padding: 12px 30px; border-radius: 50px; cursor: pointer; font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 8px; margin: 0 auto; box-shadow: 0 5px 15px rgba(161, 196, 253, 0.4); }
 .timeout-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(161, 196, 253, 0.6); }
-
-/* ✅ ЭФФЕКТЫ */
+/* Effects */
 .sparkle, .heart, .star, .sparkle-particle, .magic-orb, .particle, .sparkle-burst, .star-burst { position: absolute; pointer-events: none; }
 
-/* Частицы для Particle Dissolve */
+/* Частицы */
 .particle {
     position: absolute;
     border-radius: 50%;
@@ -322,21 +327,12 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     box-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 45px currentColor;
 }
 @keyframes particleDissolve {
-    0% { 
-        opacity: 1; 
-        transform: scale(1.5) translate(0, 0) rotate(0deg); 
-    }
-    50% { 
-        opacity: 0.8; 
-        transform: scale(0.8) translate(var(--tx), var(--ty)) rotate(180deg); 
-    }
-    100% { 
-        opacity: 0; 
-        transform: scale(0) translate(calc(var(--tx) * 2.5), calc(var(--ty) * 2.5)) rotate(360deg); 
-    }
+    0% { opacity: 1; transform: scale(1.5) translate(0, 0) rotate(0deg); }
+    50% { opacity: 0.8; transform: scale(0.8) translate(var(--tx), var(--ty)) rotate(180deg); }
+    100% { opacity: 0; transform: scale(0) translate(calc(var(--tx) * 2.5), calc(var(--ty) * 2.5)) rotate(360deg); }
 }
 
-/* Блёстки/Искры */
+/* Блёстки */
 .sparkle-burst {
     position: absolute;
     width: 15px;
@@ -348,18 +344,9 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     box-shadow: 0 0 20px #ffd700, 0 0 40px white;
 }
 @keyframes sparkleBurst {
-    0% { 
-        opacity: 1; 
-        transform: scale(0) rotate(0deg); 
-    }
-    30% { 
-        opacity: 1; 
-        transform: scale(1.5) rotate(90deg); 
-    }
-    100% { 
-        opacity: 0; 
-        transform: scale(0.3) translate(var(--sx), var(--sy)) rotate(180deg); 
-    }
+    0% { opacity: 1; transform: scale(0) rotate(0deg); }
+    30% { opacity: 1; transform: scale(1.5) rotate(90deg); }
+    100% { opacity: 0; transform: scale(0.3) translate(var(--sx), var(--sy)) rotate(180deg); }
 }
 
 /* Звёзды */
@@ -374,18 +361,9 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     box-shadow: 0 0 15px white, 0 0 30px #ffd700;
 }
 @keyframes starFly {
-    0% { 
-        opacity: 1; 
-        transform: scale(0) translateY(0); 
-    }
-    30% { 
-        opacity: 1; 
-        transform: scale(1.3) translateY(-30px); 
-    }
-    100% { 
-        opacity: 0; 
-        transform: scale(0.2) translateY(-100px); 
-    }
+    0% { opacity: 1; transform: scale(0) translateY(0); }
+    30% { opacity: 1; transform: scale(1.3) translateY(-30px); }
+    100% { opacity: 0; transform: scale(0.2) translateY(-100px); }
 }
 
 .heart { width: 8px; height: 8px; background: #ff69b4; transform: rotate(45deg); box-shadow: 0 0 5px #ff69b4; animation: heartFloat 1.5s ease-out forwards; z-index: 90; }
@@ -431,6 +409,7 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 </style>
 </head>
 <body>
+<!-- START SCREEN -->
 <div class="start-screen" id="startScreen">
 <h1 class="salon-title">✨ Beauty Quest ✨</h1>
 <div class="levels-container">
@@ -458,9 +437,11 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 </div>
 </div>
 <div class="game-container" id="gameContainer">
+<!-- КНОПКА ДОМИК (СПРАВА ВНИЗУ) -->
 <div class="home-btn-fixed" onclick="game.goToStart()" title="В меню">
 <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
 </div>
+<!-- Header -->
 <div class="game-header">
 <div class="header-top">
 <div class="step-indicator">
@@ -482,12 +463,15 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 <div class="progress-bar" id="progressBar"></div>
 </div>
 </div>
+<!-- Main Game Area -->
 <div class="game-main">
 <div class="photo-section">
 <div class="steps-panel" id="stepsPanel"></div>
+<!-- ✅ ЗВЕЗДА ДЛЯ ОТЗЫВОВ -->
 <div class="review-star-btn" id="reviewStarBtn" onclick="game.toggleReview()">
 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
 </div>
+<!-- ✅ ПЛАШКА С ОТЗЫВОМ -->
 <div class="message-plaque" id="messagePlaque">
 <div class="close-btn" onclick="game.closeMessage()"></div>
 <div class="message-text" id="messageText"></div>
@@ -506,6 +490,7 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 <div class="feedback-message" id="feedbackMessage"></div>
 </div>
 </div>
+<!-- Final Screen -->
 <div class="final-screen" id="finalScreen">
 <div class="final-header">
 <h1 class="final-title">🎉 Клиент в восторге!</h1>
@@ -546,6 +531,7 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 </div>
 </div>
 </div>
+<!-- Timeout Modal -->
 <div class="timeout-modal" id="timeoutModal">
 <div class="timeout-content">
 <div class="timeout-icon" id="timeoutIcon">⌚</div>
@@ -558,9 +544,11 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 </div>
 </div>
 
-<!-- ✅ МАГИЧЕСКАЯ МЕЛОДИЯ (РАБОЧАЯ) -->
+<!-- ✅ МАГИЧЕСКИЙ ЗВУК (Локальный файл) -->
+<!-- ВАЖНО: Файл sound.wav должен лежать в той же папке, что и этот HTML файл -->
 <audio id="magicSound" preload="auto">
-    <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a73467.mp3" type="audio/mpeg">
+    <source src="sound.wav" type="audio/wav">
+    Ваш браузер не поддерживает аудио.
 </audio>
 
 <script>
@@ -575,6 +563,7 @@ totalAnswers: 0,
 gameStarted: false,
 timerRunning: false,
 reviewsAvailable: false,
+audioEnabled: false, // Флаг активации звука
 gameColors: ['#ff9a9e', '#fecfef', '#a1c4fd', '#c2e9fb', '#f093fb'],
 photosNovice: [
 "https://polyaalina.github.io/Beauty-Quest/15.jpg",
@@ -598,16 +587,16 @@ photosMaster: [
 "https://polyaalina.github.io/Beauty-Quest/14.jpeg"
 ],
 phrasesGirl: [
-"Вау! Это именно то, что я хотела! 💕",
-"О боже! Я выгляжу потрясающе! ✨",
-"Это просто магия! Я себя не узнаю! 🦄",
-"Как красиво! Я так мечтала об этом! 🌸",
-"Ух ты! Теперь я точно королева! 👑",
-"Я в шоке! Это лучше чем я ожидала! 😍",
-"Какая красота! Хочу смотреться целый день! 💖",
-"О да! Именно так я себя и представляла! 💫",
-"Это чудо! Вы творите волшебство! 🧚‍♀️",
-"Обожаю! Теперь я как принцесса! 🎀"
+"Вау! Я в восторге! Это именно то, что я хотела!",
+"О боже! Я выгляжу потрясающе!",
+"Это просто магия! Я себя не узнаю!",
+"Как красиво! Я так мечтала об этом!",
+"Ух ты! Теперь я точно королева!",
+"Это волшебно! Спасибо!",
+"Я в шоке! Это лучше чем я ожидала!",
+"Какая красота! Хочу смотреться целый день!",
+"О да! Именно так я себя и представляла!",
+"Это чудо! Вы творите волшебство!"
 ],
 phrasesWoman: [
 "Браво! Это именно тот стиль, который я искала!",
@@ -622,16 +611,16 @@ phrasesWoman: [
 "Я выгляжу моложе и красивее. Благодарю!"
 ],
 phrasesBoy: [
-"Вау! Это именно то, что я хотел! 🔥",
-"О боже! Я выгляжу круто! 😎",
-"Это просто магия! Я себя не узнаю! 🤩",
-"Как стильно! Я так мечтал об этом! 💯",
-"Ух ты! Теперь я точно король! 👑",
-"Я в шоке! Это лучше чем я ожидал! 🙌",
-"Какой кайф! Хочу ходить так каждый день! 🎸",
-"О да! Именно так я себя и представлял! 💪",
-"Это чудо! Вы творите волшебство! ✨",
-"Супер! Теперь я в тренде! 🕶️"
+"Вау! Я в восторге! Это именно то, что я хотел!",
+"О боже! Я выгляжу круто!",
+"Это просто магия! Я себя не узнаю!",
+"Как стильно! Я так мечтал об этом!",
+"Ух ты! Теперь я точно король!",
+"Это волшебно! Спасибо!",
+"Я в шоке! Это лучше чем я ожидал!",
+"Какой кайф! Хочу ходить так каждый день!",
+"О да! Именно так я себя и представлял!",
+"Это чудо! Вы творите волшебство!"
 ],
 timeoutMessages: [
 { icon: '⌚', text: 'Клиент уже считает время...\nУ него есть планы!' },
@@ -726,14 +715,44 @@ this.timerInterval = null;
 this.TIMER_DURATION = 30000;
 this.init();
 }
+
 init() {
 this.ui.totalSteps.textContent = this.config.totalSteps;
 this.initMouseTrail();
+// ✅ АКТИВАЦИЯ ЗВУКА ПРИ ПЕРВОМ КЛИКЕ
+this.enableAudio();
 }
+
+// ✅ Функция разблокировки звука
+enableAudio() {
+const unlockAudio = () => {
+if (!this.config.audioEnabled && this.ui.magicSound) {
+// Пытаемся запустить и сразу поставить на паузу, чтобы разблокировать контекст
+this.ui.magicSound.play().then(() => {
+this.ui.magicSound.pause();
+this.ui.magicSound.currentTime = 0;
+this.config.audioEnabled = true;
+console.log('🔊 Звук активирован!');
+}).catch(e => {
+console.log('⚠️ Ожидание взаимодействия пользователя для звука...', e);
+});
+// Удаляем слушатели после успешной активации
+document.removeEventListener('click', unlockAudio);
+document.removeEventListener('keydown', unlockAudio);
+document.removeEventListener('touchstart', unlockAudio);
+}
+};
+
+document.addEventListener('click', unlockAudio);
+document.addEventListener('keydown', unlockAudio);
+document.addEventListener('touchstart', unlockAudio);
+}
+
 selectLevel(level) {
 this.config.difficulty = level;
 this.startGame();
 }
+
 startGame() {
 this.config.gameStarted = true;
 this.config.timerRunning = false;
@@ -760,11 +779,13 @@ this.ui.timerBar.style.animation = 'none';
 this.ui.timerBar.offsetHeight;
 this.loadQuestion();
 }
+
 changeBg(bgStyle) {
 document.body.style.background = bgStyle;
 document.body.style.backgroundSize = 'cover';
 document.body.style.backgroundPosition = 'center';
 }
+
 uploadBg(input) {
 if (input.files && input.files[0]) {
 const reader = new FileReader();
@@ -776,9 +797,11 @@ document.body.style.backgroundPosition = 'center';
 reader.readAsDataURL(input.files[0]);
 }
 }
+
 toggleTimer() {
 if (this.config.timerRunning) { this.stopTimer(); } else { this.startTimer(); }
 }
+
 startTimer() {
 if (this.config.timerRunning) return;
 this.config.timerRunning = true;
@@ -792,6 +815,7 @@ this.timerInterval = setTimeout(() => {
 if (this.config.gameStarted && this.config.timerRunning) { this.showTimeoutModal(); }
 }, this.TIMER_DURATION);
 }
+
 stopTimer() {
 this.config.timerRunning = false;
 clearInterval(this.timerInterval);
@@ -799,6 +823,7 @@ this.ui.timerBar.style.animation = 'none';
 this.ui.timerBtn.classList.remove('running');
 this.ui.timerBtnText.textContent = 'Старт';
 }
+
 showTimeoutModal() {
 this.config.timerRunning = false;
 this.stopTimer();
@@ -807,11 +832,13 @@ this.ui.timeoutIcon.textContent = randomMsg.icon;
 this.ui.timeoutMessage.textContent = randomMsg.text;
 this.ui.timeoutModal.style.display = 'flex';
 }
+
 continueFromTimeout() {
 this.ui.timeoutModal.style.display = 'none';
 this.config.timerRunning = false;
 this.ui.timerBtnText.textContent = 'Старт';
 }
+
 initMouseTrail() {
 let lastTrailTime = 0;
 document.addEventListener('mousemove', (e) => {
@@ -829,6 +856,7 @@ setTimeout(() => trail.remove(), 800);
 }
 });
 }
+
 createMagicOrb() {
 const container = this.ui.magicContainer; container.innerHTML = '';
 const orb = document.createElement('div'); orb.className = 'magic-orb'; container.appendChild(orb);
@@ -855,6 +883,7 @@ requestAnimationFrame(animateOrb);
 };
 animateOrb();
 }
+
 createTrail(x, y, container, color) {
 const heart = document.createElement('div'); heart.className = 'heart'; heart.style.background = color; heart.style.boxShadow = `0 0 5px ${color}`; heart.style.left = x + 'px'; heart.style.top = y + 'px'; container.appendChild(heart);
 const star = document.createElement('div'); star.className = 'star'; star.style.boxShadow = `0 0 5px white`; star.style.left = (x - 10) + 'px'; star.style.top = (y - 10) + 'px'; container.appendChild(star);
@@ -870,12 +899,15 @@ setTimeout(() => sparkle.remove(), 1000);
 }
 setTimeout(() => { if (heart.parentNode) heart.remove(); if (star.parentNode) star.remove(); }, 1500);
 }
+
 lightenColor(color, percent) {
 const num = parseInt(color.replace('#', ''), 16), amt = Math.round(2.55 * percent);
 const R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
 return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
 }
+
 shuffleArray(array) { const shuffled = [...array]; for (let i = shuffled.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } return shuffled; }
+
 loadQuestion() {
 if (this.config.currentStep >= this.config.questions.length) { this.finishGame(); return; }
 const question = this.config.questions[this.config.currentStep];
@@ -898,6 +930,7 @@ else if (index === this.config.currentStep) item.classList.add('active');
 });
 this.ui.feedbackMessage.className = 'feedback-message'; this.ui.feedbackMessage.textContent = '';
 }
+
 checkAnswer(isCorrect, btnElement, photoIndex) {
 this.config.totalAnswers++;
 const buttons = this.ui.optionsList.querySelectorAll('.option-btn');
@@ -911,21 +944,19 @@ btnElement.classList.add('wrong'); this.showFeedback('Попробуй ещё р
 setTimeout(() => { btnElement.classList.remove('wrong'); buttons.forEach(btn => btn.disabled = false); this.ui.feedbackMessage.classList.remove('show'); }, 1200);
 }
 }
+
 showFeedback(text, type) { this.ui.feedbackMessage.textContent = text; this.ui.feedbackMessage.className = `feedback-message show ${type}`; }
+
 applyTransformation(photoIndex) {
-// ✅ ВОСПРОИЗВЕДЕНИЕ МАГИЧЕСКОЙ МЕЛОДИИ
+// ✅ ВОСПРОИЗВЕДЕНИЕ ЗВУКА
 this.playMagicSound();
-
-// ✅ МАГИЯ СЕРДЦЕМ (орб)
+// ✅ МАГИЯ СЕРДЦЕМ
 this.createMagicOrb();
-
-// ✅ ЧАСТИЦЫ (150 штук - БОЛЬШЕ БЛЕСКА!)
+// ✅ ЧАСТИЦЫ (150)
 this.createParticleDissolve(150);
-
-// ✅ БЛЁСТКИ/ИСКРЫ (50 штук)
+// ✅ БЛЁСТКИ (50)
 this.createSparkles(50);
-
-// ✅ ЗВЁЗДЫ (30 штук)
+// ✅ ЗВЁЗДЫ (30)
 this.createStars(30);
 
 this.ui.photoContainer.classList.add('transitioning');
@@ -937,7 +968,6 @@ this.ui.clientPhoto.onload = () => {
 this.ui.clientPhoto.classList.remove('fade-out');
 this.ui.clientPhoto.classList.add('fade-in');
 this.ui.photoContainer.classList.remove('transitioning');
-
 if (photoIndex > 0) {
 this.config.reviewsAvailable = true;
 this.showReviewStar();
@@ -956,12 +986,10 @@ this.loadQuestion();
 createParticleDissolve(count = 150) {
 const container = this.ui.magicContainer;
 const colors = ['#ff9a9e', '#fecfef', '#a1c4fd', '#c2e9fb', '#f093fb', '#ffd700', '#ffffff', '#ff69b4'];
-
 for (let i = 0; i < count; i++) {
 setTimeout(() => {
 const particle = document.createElement('div');
 particle.className = 'particle';
-
 const startX = Math.random() * 100;
 const startY = Math.random() * 100;
 const angle = Math.random() * Math.PI * 2;
@@ -969,7 +997,6 @@ const distance = 150 + Math.random() * 200;
 const tx = Math.cos(angle) * distance;
 const ty = Math.sin(angle) * distance;
 const color = colors[Math.floor(Math.random() * colors.length)];
-
 particle.style.left = startX + '%';
 particle.style.top = startY + '%';
 particle.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
@@ -978,34 +1005,29 @@ particle.style.setProperty('--tx', tx + 'px');
 particle.style.setProperty('--ty', ty + 'px');
 particle.style.width = (8 + Math.random() * 10) + 'px';
 particle.style.height = particle.style.width;
-
 container.appendChild(particle);
 setTimeout(() => { if (particle.parentNode) particle.remove(); }, 1500);
 }, i * 10);
 }
 }
 
-// ✅ БЛЁСТКИ/ИСКРЫ
+// ✅ БЛЁСТКИ
 createSparkles(count = 50) {
 const container = this.ui.magicContainer;
-
 for (let i = 0; i < count; i++) {
 setTimeout(() => {
 const sparkle = document.createElement('div');
 sparkle.className = 'sparkle-burst';
-
 const startX = 30 + Math.random() * 40;
 const startY = 30 + Math.random() * 40;
 const angle = Math.random() * Math.PI * 2;
 const distance = 50 + Math.random() * 100;
 const sx = Math.cos(angle) * distance;
 const sy = Math.sin(angle) * distance;
-
 sparkle.style.left = startX + '%';
 sparkle.style.top = startY + '%';
 sparkle.style.setProperty('--sx', sx + 'px');
 sparkle.style.setProperty('--sy', sy + 'px');
-
 container.appendChild(sparkle);
 setTimeout(() => { if (sparkle.parentNode) sparkle.remove(); }, 1000);
 }, i * 20);
@@ -1015,32 +1037,32 @@ setTimeout(() => { if (sparkle.parentNode) sparkle.remove(); }, 1000);
 // ✅ ЗВЁЗДЫ
 createStars(count = 30) {
 const container = this.ui.magicContainer;
-
 for (let i = 0; i < count; i++) {
 setTimeout(() => {
 const star = document.createElement('div');
 star.className = 'star-burst';
-
 const startX = 20 + Math.random() * 60;
 const startY = 20 + Math.random() * 60;
-
 star.style.left = startX + '%';
 star.style.top = startY + '%';
-
 container.appendChild(star);
 setTimeout(() => { if (star.parentNode) star.remove(); }, 1200);
 }, i * 30);
 }
 }
 
-// ✅ ВОСПРОИЗВЕДЕНИЕ МАГИЧЕСКОЙ МЕЛОДИИ
+// ✅ ВОСПРОИЗВЕДЕНИЕ ЗВУКА
 playMagicSound() {
-if (this.ui.magicSound) {
-this.ui.magicSound.volume = 0.6;
+if (this.ui.magicSound && this.config.audioEnabled) {
 this.ui.magicSound.currentTime = 0;
-this.ui.magicSound.play().catch(e => {
-console.log('Audio autoplay blocked - user interaction needed');
+this.ui.magicSound.volume = 0.5;
+this.ui.magicSound.play().then(() => {
+console.log('🎵 Музыка играет');
+}).catch(error => {
+console.error('❌ Ошибка воспроизведения:', error);
 });
+} else if (!this.config.audioEnabled) {
+console.warn('⚠️ Звук еще не активирован. Кликните в любом месте страницы.');
 }
 }
 
@@ -1072,7 +1094,6 @@ this.showMessage();
 showMessage() {
 if (!this.config.gameStarted) return;
 if (!this.config.reviewsAvailable) return;
-
 let phraseList;
 if (this.config.difficulty === 'master') {
 phraseList = this.config.phrasesBoy;
@@ -1081,7 +1102,6 @@ phraseList = this.config.phrasesWoman;
 } else {
 phraseList = this.config.phrasesGirl;
 }
-
 if (!this.config.availablePhrases || this.config.availablePhrases.length === 0) {
 this.config.availablePhrases = this.shuffleArray(phraseList);
 }
@@ -1089,7 +1109,6 @@ const randomIndex = Math.floor(Math.random() * this.config.availablePhrases.leng
 const chosenPhrase = this.config.availablePhrases[randomIndex];
 this.config.availablePhrases.splice(randomIndex, 1);
 if (this.config.availablePhrases.length < 2) { this.config.availablePhrases = this.shuffleArray(phraseList); }
-
 this.ui.messageText.textContent = chosenPhrase;
 this.ui.messagePlaque.classList.add('show');
 }
@@ -1116,6 +1135,7 @@ this.ui.progressBar.style.width = '100%';
 this.createConfetti();
 setTimeout(() => { this.ui.finalScreen.classList.add('show'); }, 400);
 }
+
 createConfetti() {
 const colors = ['#ff9a9e', '#fecfef', '#a1c4fd', '#c2e9fb', '#f093fb'];
 for (let i = 0; i < 40; i++) {
@@ -1127,6 +1147,7 @@ document.body.appendChild(confetti); setTimeout(() => confetti.remove(), 2500);
 }, i * 40);
 }
 }
+
 goToStart() {
 this.ui.finalScreen.classList.remove('show');
 this.ui.startScreen.classList.remove('hidden');
@@ -1140,6 +1161,7 @@ this.config.gameStarted = false;
 this.stopTimer();
 }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
 window.game = new BeautyQuestGame();
 });
