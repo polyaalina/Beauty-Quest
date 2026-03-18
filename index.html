@@ -9,7 +9,6 @@
 
 body {
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-/* Неоновый фон */
 background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
 background-size: 400% 400%;
 animation: gradientBG 15s ease infinite;
@@ -29,7 +28,6 @@ color: #fff;
 
 .game-container {
 width: 100%; max-width: 1200px; height: 90vh;
-/* Эффект стекла с неоновой рамкой */
 background: rgba(255, 255, 255, 0.05);
 border-radius: 30px; 
 border: 2px solid rgba(0, 242, 254, 0.3);
@@ -42,7 +40,7 @@ backdrop-filter: blur(15px);
 /* START SCREEN */
 .start-screen {
 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-background: rgba(15, 12, 41, 0.9);
+background: rgba(15, 12, 41, 0.95);
 backdrop-filter: blur(10px);
 display: flex; flex-direction: column; justify-content: center; align-items: center;
 z-index: 2000; text-align: center;
@@ -51,7 +49,6 @@ z-index: 2000; text-align: center;
 
 .salon-title { 
     font-size: 72px; font-weight: 900; 
-    /* Неоновый текст */
     color: #fff;
     text-shadow: 0 0 10px #00f2fe, 0 0 20px #00f2fe, 0 0 40px #00f2fe;
     margin-bottom: 40px; 
@@ -85,7 +82,7 @@ box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
 
 .bg-selector {
 position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-background: rgba(0, 0, 0, 0.4); padding: 10px 20px; border-radius: 50px;
+background: rgba(0, 0, 0, 0.6); padding: 10px 20px; border-radius: 50px;
 backdrop-filter: blur(5px); display: flex; gap: 10px; align-items: center;
 z-index: 2001; border: 1px solid rgba(255,255,255,0.2);
 box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -102,7 +99,7 @@ color: white; text-shadow: 0 0 5px rgba(255,255,255,0.5); border: 1px solid rgba
 
 /* GAME HEADER */
 .game-header {
-background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
+background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px);
 padding: 15px 30px; color: white; border-bottom: 1px solid rgba(0, 242, 254, 0.3);
 box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
@@ -113,36 +110,57 @@ box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 .timer-btn:hover { transform: translateY(-2px); background: rgba(0, 242, 254, 0.2); box-shadow: 0 0 20px rgba(0, 242, 254, 0.4); }
 .timer-btn.running { background: #ff0055; color: white; border-color: #ff0055; animation: pulse 1s infinite; box-shadow: 0 0 20px #ff0055; }
 @keyframes pulse { 50% { transform: scale(1.05); box-shadow: 0 0 30px #ff0055; } }
-.timer-container { margin-top: 10px; background: rgba(0,0,0,0.5); height: 8px; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+.timer-container { margin-top: 10px; background: rgba(0,0,0,0.6); height: 8px; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
 .timer-bar { height: 100%; width: 100%; background: linear-gradient(90deg, #ff0055, #ffcc00, #00ff00, #00f2fe, #fc00ff); background-size: 400% 100%; animation: rainbow-move 2s linear infinite, timer-shrink 30s linear forwards; box-shadow: 0 0 10px currentColor; }
 @keyframes rainbow-move { 100% { background-position: 400% 50%; } }
 @keyframes timer-shrink { 100% { width: 0%; } }
 .timer-text { font-size: 12px; text-align: center; margin-top: 4px; opacity: 0.9; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
-.progress-container { background: rgba(0,0,0,0.5); height: 10px; border-radius: 5px; overflow: hidden; margin-top: 10px; border: 1px solid rgba(255,255,255,0.1); }
+.progress-container { background: rgba(0,0,0,0.6); height: 10px; border-radius: 5px; overflow: hidden; margin-top: 10px; border: 1px solid rgba(255,255,255,0.1); }
 .progress-bar { height: 100%; background: linear-gradient(90deg, #00f2fe, #fc00ff); width: 0%; transition: width 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); border-radius: 5px; box-shadow: 0 0 15px #00f2fe; }
 
 /* MAIN GAME AREA */
 .game-main { flex: 1; display: flex; overflow: hidden; position: relative; }
-.photo-section { flex: 1; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; padding: 20px 20px 20px 280px; position: relative; }
+.photo-section { flex: 1; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; padding: 20px 20px 20px 280px; position: relative; }
+
+/* ✅ ИСПРАВЛЕНИЕ: Абсолютно черный фон всегда */
 .photo-container { 
     width: 100%; max-width: 400px; height: 550px; 
-    border-radius: 25px; overflow: visible; 
+    border-radius: 25px; overflow: hidden; 
     box-shadow: 0 0 30px rgba(0, 242, 254, 0.3), 0 0 60px rgba(0, 242, 254, 0.1); 
-    position: relative; background: #000; 
+    position: relative; 
+    background: #000 !important; /* Жесткий черный */
     border: 3px solid rgba(0, 242, 254, 0.5); 
+    /* Включаем аппаратное ускорение для контейнера */
+    transform: translateZ(0); 
+    backface-visibility: hidden;
 }
+
 .client-photo { 
     width: 100%; height: 100%; 
     object-fit: cover; 
-    transition: opacity 0.8s ease, transform 0.8s ease; 
+    /* Оптимизированный переход */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; 
+    will-change: opacity, transform;
     position: relative;
     z-index: 50;
     filter: brightness(1.1) contrast(1.1);
+    background-color: #000; /* Страховка */
 }
-.client-photo.fade-out { opacity: 0; transform: scale(1.1); }
-.client-photo.fade-in { opacity: 1; transform: scale(1); }
+
+/* ✅ ИСПРАВЛЕНИЕ: Только opacity, без visibility */
+.client-photo.fade-out { 
+    opacity: 0; 
+    transform: scale(1.05); /* Легкое увеличение для эффекта */
+    /* visibility убрано, чтобы избежать мерцания */
+}
+
+.client-photo.fade-in { 
+    opacity: 1; 
+    transform: scale(1); 
+}
+
 .magic-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; overflow: visible; }
-.steps-panel { position: absolute; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.6); padding: 15px; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 242, 254, 0.2); z-index: 10; min-width: 180px; backdrop-filter: blur(10px); border: 1px solid rgba(0, 242, 254, 0.3); }
+.steps-panel { position: absolute; top: 20px; left: 20px; background: rgba(0, 0, 0, 0.7); padding: 15px; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 242, 254, 0.2); z-index: 10; min-width: 180px; backdrop-filter: blur(10px); border: 1px solid rgba(0, 242, 254, 0.3); }
 .step-item { display: flex; align-items: center; gap: 10px; margin: 10px 0; padding: 10px; border-radius: 10px; transition: all 0.3s; opacity: 0.6; background: rgba(255,255,255,0.05); color: #ccc; font-size: 14px; font-weight: 600; border: 1px solid rgba(255,255,255,0.1); }
 .step-item.active { opacity: 1; background: rgba(0, 242, 254, 0.2); color: #fff; transform: scale(1.05) translateX(5px); box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); border-color: #00f2fe; }
 .step-item.completed { opacity: 1; background: rgba(252, 0, 255, 0.2); color: #fff; border-color: #fc00ff; box-shadow: 0 0 15px rgba(252, 0, 255, 0.4); }
@@ -195,7 +213,7 @@ box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     position: absolute; 
     top: 375px; 
     left: 20px; 
-    background: rgba(0, 0, 0, 0.8); 
+    background: rgba(0, 0, 0, 0.85); 
     color: #fff; 
     padding: 18px 22px; 
     border-radius: 20px; 
@@ -257,7 +275,7 @@ box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 .close-btn::after { transform: translate(-50%, -50%) rotate(-45deg); }
 
-.quiz-section { width: 450px; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px); padding: 30px; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid rgba(0, 242, 254, 0.3); }
+.quiz-section { width: 450px; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(15px); padding: 30px; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid rgba(0, 242, 254, 0.3); }
 .question-card { background: rgba(255,255,255,0.05); color: #fff; padding: 25px; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 0 20px rgba(0, 242, 254, 0.1); border: 1px solid rgba(255,255,255,0.1); }
 .question-title { font-size: 22px; margin-bottom: 10px; font-weight: 800; line-height: 1.2; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
 .question-hint { font-size: 14px; opacity: 0.7; font-style: italic; }
@@ -276,7 +294,7 @@ box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 /* FINAL SCREEN */
 .final-screen {
 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(15px);
+background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px);
 display: flex; flex-direction: column; justify-content: center; align-items: center;
 color: white; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.6s; padding: 20px;
 }
@@ -357,7 +375,7 @@ filter: drop-shadow(0 0 5px #00f2fe);
 }
 
 /* Timeout Modal */
-.timeout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); justify-content: center; align-items: center; z-index: 3000; }
+.timeout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); justify-content: center; align-items: center; z-index: 3000; }
 .timeout-content { background: rgba(20, 20, 40, 0.95); padding: 30px; border-radius: 25px; text-align: center; max-width: 400px; width: 90%; animation: popup 0.4s ease; box-shadow: 0 0 50px rgba(255, 0, 85, 0.4); border: 2px solid #ff0055; }
 @keyframes popup { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 .timeout-icon { font-size: 50px; margin-bottom: 15px; filter: drop-shadow(0 0 10px #ff0055); }
@@ -821,9 +839,18 @@ else this.config.photos = this.config.photosNovice;
 this.config.questions = levelData.questions;
 this.config.availablePhrases = [];
 this.ui.clientPhoto.src = this.config.photos[0];
+// Предзагрузка следующего изображения для плавности
+this.preloadImage(this.config.photos[1]);
+
 this.ui.timerBar.style.animation = 'none';
 this.ui.timerBar.offsetHeight;
 this.loadQuestion();
+}
+
+// ✅ НОВАЯ ФУНКЦИЯ: Предзагрузка изображений
+preloadImage(src) {
+const img = new Image();
+img.src = src;
 }
 
 changeBg(bgStyle) {
@@ -984,6 +1011,11 @@ buttons.forEach(btn => btn.disabled = true);
 if (isCorrect) {
 this.config.correctAnswers++; btnElement.classList.add('correct');
 this.showFeedback('Преображаем! ✨', 'success');
+// Предзагружаем следующее фото заранее
+const nextIndex = photoIndex + 1;
+if (nextIndex < this.config.photos.length) {
+    this.preloadImage(this.config.photos[nextIndex]);
+}
 setTimeout(() => { this.applyTransformation(photoIndex); }, 800);
 } else {
 btnElement.classList.add('wrong'); this.showFeedback('Попробуй ещё раз! 💪', 'error');
@@ -1014,7 +1046,7 @@ this.config.reviewsAvailable = true;
 this.showReviewStar();
 }
 };
-}, 1000);
+}, 600); // Чуть уменьшил время для динамики
 
 setTimeout(() => { 
 this.ui.clientPhoto.classList.remove('fade-in');
