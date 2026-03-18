@@ -545,10 +545,8 @@ filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 </div>
 
 <!-- ✅ МАГИЧЕСКИЙ ЗВУК (Локальный файл) -->
-<!-- ВАЖНО: Файл sound.wav должен лежать в той же папке, что и этот HTML файл -->
 <audio id="magicSound" preload="auto">
     <source src="sound.wav" type="audio/wav">
-    Ваш браузер не поддерживает аудио.
 </audio>
 
 <script>
@@ -563,8 +561,9 @@ totalAnswers: 0,
 gameStarted: false,
 timerRunning: false,
 reviewsAvailable: false,
-audioEnabled: false, // Флаг активации звука
+audioEnabled: false,
 gameColors: ['#ff9a9e', '#fecfef', '#a1c4fd', '#c2e9fb', '#f093fb'],
+// ✅ ВАШИ ОРИГИНАЛЬНЫЕ КАРТИНКИ (НОВИЧОК)
 photosNovice: [
 "https://polyaalina.github.io/Beauty-Quest/15.jpg",
 "https://polyaalina.github.io/Beauty-Quest/16.jpg",
@@ -572,6 +571,7 @@ photosNovice: [
 "https://polyaalina.github.io/Beauty-Quest/18.jpg",
 "https://polyaalina.github.io/Beauty-Quest/19.jpg"
 ],
+// ✅ ВАШИ ОРИГИНАЛЬНЫЕ КАРТИНКИ (ПРОФИ)
 photosPro: [
 "https://polyaalina.github.io/Beauty-Quest/50.jpeg",
 "https://polyaalina.github.io/Beauty-Quest/6.jpeg",
@@ -579,6 +579,7 @@ photosPro: [
 "https://polyaalina.github.io/Beauty-Quest/8.jpeg",
 "https://polyaalina.github.io/Beauty-Quest/9.jpeg"
 ],
+// ✅ ВАШИ ОРИГИНАЛЬНЫЕ КАРТИНКИ (МАСТЕР)
 photosMaster: [
 "https://polyaalina.github.io/Beauty-Quest/10.jpeg",
 "https://polyaalina.github.io/Beauty-Quest/11.jpeg",
@@ -719,30 +720,25 @@ this.init();
 init() {
 this.ui.totalSteps.textContent = this.config.totalSteps;
 this.initMouseTrail();
-// ✅ АКТИВАЦИЯ ЗВУКА ПРИ ПЕРВОМ КЛИКЕ
 this.enableAudio();
 }
 
-// ✅ Функция разблокировки звука
 enableAudio() {
 const unlockAudio = () => {
 if (!this.config.audioEnabled && this.ui.magicSound) {
-// Пытаемся запустить и сразу поставить на паузу, чтобы разблокировать контекст
 this.ui.magicSound.play().then(() => {
 this.ui.magicSound.pause();
 this.ui.magicSound.currentTime = 0;
 this.config.audioEnabled = true;
 console.log('🔊 Звук активирован!');
 }).catch(e => {
-console.log('⚠️ Ожидание взаимодействия пользователя для звука...', e);
+console.log('⚠️ Ожидание клика для звука...', e);
 });
-// Удаляем слушатели после успешной активации
 document.removeEventListener('click', unlockAudio);
 document.removeEventListener('keydown', unlockAudio);
 document.removeEventListener('touchstart', unlockAudio);
 }
 };
-
 document.addEventListener('click', unlockAudio);
 document.addEventListener('keydown', unlockAudio);
 document.addEventListener('touchstart', unlockAudio);
@@ -948,15 +944,10 @@ setTimeout(() => { btnElement.classList.remove('wrong'); buttons.forEach(btn => 
 showFeedback(text, type) { this.ui.feedbackMessage.textContent = text; this.ui.feedbackMessage.className = `feedback-message show ${type}`; }
 
 applyTransformation(photoIndex) {
-// ✅ ВОСПРОИЗВЕДЕНИЕ ЗВУКА
 this.playMagicSound();
-// ✅ МАГИЯ СЕРДЦЕМ
 this.createMagicOrb();
-// ✅ ЧАСТИЦЫ (150)
 this.createParticleDissolve(150);
-// ✅ БЛЁСТКИ (50)
 this.createSparkles(50);
-// ✅ ЗВЁЗДЫ (30)
 this.createStars(30);
 
 this.ui.photoContainer.classList.add('transitioning');
@@ -982,7 +973,6 @@ this.loadQuestion();
 }, 2000);
 }
 
-// ✅ ЧАСТИЦЫ (PARTICLE DISSOLVE)
 createParticleDissolve(count = 150) {
 const container = this.ui.magicContainer;
 const colors = ['#ff9a9e', '#fecfef', '#a1c4fd', '#c2e9fb', '#f093fb', '#ffd700', '#ffffff', '#ff69b4'];
@@ -1011,7 +1001,6 @@ setTimeout(() => { if (particle.parentNode) particle.remove(); }, 1500);
 }
 }
 
-// ✅ БЛЁСТКИ
 createSparkles(count = 50) {
 const container = this.ui.magicContainer;
 for (let i = 0; i < count; i++) {
@@ -1034,7 +1023,6 @@ setTimeout(() => { if (sparkle.parentNode) sparkle.remove(); }, 1000);
 }
 }
 
-// ✅ ЗВЁЗДЫ
 createStars(count = 30) {
 const container = this.ui.magicContainer;
 for (let i = 0; i < count; i++) {
@@ -1051,30 +1039,19 @@ setTimeout(() => { if (star.parentNode) star.remove(); }, 1200);
 }
 }
 
-// ✅ ВОСПРОИЗВЕДЕНИЕ ЗВУКА
 playMagicSound() {
 if (this.ui.magicSound && this.config.audioEnabled) {
 this.ui.magicSound.currentTime = 0;
 this.ui.magicSound.volume = 0.5;
-this.ui.magicSound.play().then(() => {
-console.log('🎵 Музыка играет');
-}).catch(error => {
-console.error('❌ Ошибка воспроизведения:', error);
-});
-} else if (!this.config.audioEnabled) {
-console.warn('⚠️ Звук еще не активирован. Кликните в любом месте страницы.');
+this.ui.magicSound.play().catch(e => console.log('Ошибка звука:', e));
 }
 }
 
 showReviewStar() {
 let starType;
-if (this.config.difficulty === 'master') {
-starType = 'boy';
-} else if (this.config.difficulty === 'pro') {
-starType = 'woman';
-} else {
-starType = 'girl';
-}
+if (this.config.difficulty === 'master') starType = 'boy';
+else if (this.config.difficulty === 'pro') starType = 'woman';
+else starType = 'girl';
 this.ui.reviewStarBtn.className = `review-star-btn visible ${starType}`;
 }
 
@@ -1092,23 +1069,20 @@ this.showMessage();
 }
 
 showMessage() {
-if (!this.config.gameStarted) return;
-if (!this.config.reviewsAvailable) return;
+if (!this.config.gameStarted || !this.config.reviewsAvailable) return;
 let phraseList;
-if (this.config.difficulty === 'master') {
-phraseList = this.config.phrasesBoy;
-} else if (this.config.difficulty === 'pro') {
-phraseList = this.config.phrasesWoman;
-} else {
-phraseList = this.config.phrasesGirl;
-}
+if (this.config.difficulty === 'master') phraseList = this.config.phrasesBoy;
+else if (this.config.difficulty === 'pro') phraseList = this.config.phrasesWoman;
+else phraseList = this.config.phrasesGirl;
+
 if (!this.config.availablePhrases || this.config.availablePhrases.length === 0) {
 this.config.availablePhrases = this.shuffleArray(phraseList);
 }
 const randomIndex = Math.floor(Math.random() * this.config.availablePhrases.length);
 const chosenPhrase = this.config.availablePhrases[randomIndex];
 this.config.availablePhrases.splice(randomIndex, 1);
-if (this.config.availablePhrases.length < 2) { this.config.availablePhrases = this.shuffleArray(phraseList); }
+if (this.config.availablePhrases.length < 2) this.config.availablePhrases = this.shuffleArray(phraseList);
+
 this.ui.messageText.textContent = chosenPhrase;
 this.ui.messagePlaque.classList.add('show');
 }
